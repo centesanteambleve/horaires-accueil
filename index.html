@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horaires Accueil &#8212; CSA</title>
+<style>
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Arial,sans-serif;background:#f0f4f8;color:#222;font-size:13px;}
+.app{max-width:1400px;margin:0 auto;padding:1rem;}
+.hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px;background:#fff;border-radius:10px;padding:12px 16px;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.ttl{font-size:17px;font-weight:700;color:#1B4F8A;}
+.sttl{font-size:11px;color:#888;margin-top:2px;}
+.ctrls{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
+select{font-size:11px;padding:5px 8px;border-radius:6px;border:1px solid #ddd;background:#fff;color:#333;}
+.btn{font-size:11px;padding:5px 11px;border-radius:6px;border:1px solid #ddd;background:#fff;color:#333;cursor:pointer;font-weight:500;}
+.btn:hover{background:#f0f0f0;}
+.bg{background:#0F6E56;color:#fff;border-color:#0F6E56;}.bg:hover{background:#085041;}
+.bb{background:#185FA5;color:#fff;border-color:#185FA5;}.bb:hover{background:#0C447C;}
+.bp{background:#6B3FA0;color:#fff;border-color:#6B3FA0;}.bp:hover{background:#4E2D78;}
+.br{background:#993C1D;color:#fff;border-color:#993C1D;}.br:hover{background:#712B13;}
+.bor{background:#E67E22;color:#fff;border-color:#E67E22;}.bor:hover{background:#CA6F1E;}
+.sv{font-size:10px;color:#3B6D11;padding:3px 8px;background:#EAF3DE;border-radius:6px;display:none;}
+.sv.on{display:inline-block;}
+.tabs{display:flex;gap:3px;border-bottom:2px solid #e0e6f0;background:#fff;border-radius:10px 10px 0 0;padding:8px 12px 0;}
+.tab{padding:7px 14px;font-size:12px;cursor:pointer;border:none;background:transparent;color:#888;border-bottom:2px solid transparent;margin-bottom:-2px;border-radius:6px 6px 0 0;font-weight:500;}
+.tab:hover{color:#185FA5;background:#f0f5ff;}
+.tab.active{color:#185FA5;border-bottom-color:#185FA5;background:#EBF3FB;}
+.panel{background:#fff;border-radius:0 0 10px 10px;padding:1rem;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:1rem;}
+.gw{overflow-x:auto;position:relative;}
+.ghw{overflow-x:auto;position:relative;}
+table.hht{border-collapse:collapse;font-size:11px;min-width:100%;}
+table.hht th,table.hht td{border:1px solid #e8ecf0;padding:3px 4px;white-space:nowrap;}
+table.hht th{background:#EBF3FB;font-weight:600;color:#1B4F8A;text-align:center;font-size:10px;}
+table.hht th:first-child{position:sticky;left:0;z-index:3;background:#EBF3FB;}
+table.ht{border-collapse:collapse;font-size:11px;min-width:100%;}
+table.ht th,table.ht td{border:1px solid #e8ecf0;padding:3px 4px;white-space:nowrap;}
+table.ht th{background:#EBF3FB;font-weight:600;color:#1B4F8A;text-align:center;font-size:10px;}table.ht th:first-child{position:sticky;left:0;z-index:3;background:#EBF3FB;}
+td.nc{font-weight:600;color:#1B4F8A;background:#f0f5ff;padding:3px 8px;min-width:100px;border-right:2px solid #B5D4F4;position:sticky;left:0;z-index:2;}
+td.nc.tmp{color:#7D3C98;background:#F5EEF8;border-right:2px solid #D2B4DE;position:sticky;left:0;z-index:2;}
+td.tc{font-weight:600;text-align:center;background:#f0f5ff;font-size:10px;min-width:40px;}
+td.sl{text-align:center;cursor:pointer;min-width:54px;font-size:9px;user-select:none;}
+td.sl:hover:not(.we):not(.fe):not(.rp):not(.cg){filter:brightness(.93);}
+td.sl.hv{background:#D6EAF8;color:#0C447C;}
+td.sl.hma{background:#D4EED4;color:#1B5E20;}
+td.sl.hmb{background:#A9DFBF;color:#145A32;}
+td.sl.rp{background:#F2F3F4;color:#888;cursor:default;}
+td.sl.cg{background:#FEF9E7;color:#7D6608;cursor:default;}
+td.sl.fe{background:#EAFAF1;color:#1E8449;cursor:default;}
+td.sl.we{background:#f5f5f5;cursor:default;color:#bbb;}
+td.sl.sel{outline:3px solid #F39C12!important;background:#FEF9E7!important;z-index:1;position:relative;}
+#copy-bar{display:none;position:sticky;top:0;z-index:100;background:#E67E22;color:#fff;
+  padding:8px 16px;border-radius:8px;margin-bottom:8px;font-size:12px;font-weight:600;
+  gap:10px;box-shadow:0 2px 8px rgba(0,0,0,.2);}
+#copy-bar.on{display:flex;align-items:center;}
+#copy-bar .cbb{background:#fff;color:#E67E22;border:none;border-radius:6px;padding:5px 13px;
+  font-size:11px;font-weight:700;cursor:pointer;}
+#copy-bar .cbb.red{background:#C0392B;color:#fff;}
+td.sl.ml{background:#E67E22;color:#fff;cursor:default;}
+td.sl.ml-sc{background:#C0392B;color:#fff;cursor:default;}
+td.sl.css2{background:#8E44AD;color:#fff;cursor:default;}
+td.sl.fx{border-left:3px solid #185FA5;}
+td.sl.fxa{border-left:3px solid #1E8449;}
+td.sl.fxb{border-left:3px solid #145A32;}
+td.sl .hl{display:block;font-size:10px;font-weight:500;}
+td.sl .ml{display:block;font-size:8px;color:#1E8449;font-style:italic;}
+tr.wt td{background:#EBF3FB!important;font-size:9px;font-weight:600;text-align:center;color:#185FA5;border-top:2px solid #B5D4F4!important;}
+tr.wt td.wl{text-align:left;padding-left:6px;color:#888;position:sticky;left:0;z-index:2;background:#EBF3FB;}
+tr.tmp-sep td{background:#F5EEF8!important;color:#7D3C98;font-size:10px;font-weight:700;padding:4px 10px;border-top:2px solid #D2B4DE!important;}
+tr.tmp-row.wt td{background:#F5EEF8!important;color:#7D3C98;}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:1rem;}
+.sc{background:#f0f5ff;border-radius:8px;padding:9px 12px;border:1px solid #D6EAF8;}
+.sl2{font-size:10px;color:#888;margin-bottom:3px;}
+.svv{font-size:19px;font-weight:700;color:#1B4F8A;}
+.ib{font-size:11px;color:#666;background:#f8f9fa;padding:7px 11px;border-radius:7px;margin-bottom:.8rem;border-left:3px solid #185FA5;}
+.temp-sec{background:#FDF2F8;border:1px solid #D2B4DE;border-radius:10px;padding:1rem;margin-bottom:1rem;}
+.temp-sec-title{font-size:13px;font-weight:700;color:#7D3C98;margin-bottom:.7rem;}
+.temp-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:.8rem;}
+.tbadge{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #D2B4DE;border-radius:20px;padding:5px 10px;font-size:11px;color:#7D3C98;font-weight:500;}
+.tbadge .tav{width:22px;height:22px;border-radius:50%;background:#E8DAEF;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;}
+.tbadge .trm{cursor:pointer;color:#C0392B;font-size:14px;margin-left:2px;}
+.tlc2{display:flex;gap:7px;align-items:center;margin-bottom:.8rem;flex-wrap:wrap;}
+.wbtn{font-size:11px;padding:4px 11px;border-radius:6px;border:1px solid #ddd;background:#fff;color:#555;cursor:pointer;font-weight:500;}
+.wbtn:hover{background:#f0f5ff;color:#185FA5;}
+.wbtn.active{background:#185FA5;color:#fff;border-color:#185FA5;}
+.leg{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px;}
+.li{display:flex;align-items:center;gap:5px;font-size:11px;color:#666;}
+.ld{width:13px;height:13px;border-radius:3px;flex-shrink:0;}
+.tl-wrap{overflow-x:auto;}
+.tl-day{border:1.5px solid #1B4F8A;border-radius:8px;overflow:hidden;margin-bottom:16px;box-shadow:0 2px 6px rgba(27,79,138,.1);}
+.tl-day-hdr{background:#1B4F8A;color:#fff;font-weight:700;font-size:13px;padding:6px 12px;display:flex;align-items:center;justify-content:space-between;}
+.tl-flo-sep{background:#7D4B00;color:#fff;font-size:10px;font-weight:600;padding:4px 12px;border-top:2px dashed #E8C97A;}
+table.tlt{border-collapse:collapse;width:100%;}
+table.tlt th{background:#1B4F8A;color:#fff;text-align:center;padding:2px 1px;font-size:8px;border:0.5px solid #2E6DA4;}
+table.tlt th.hh{background:#2E6DA4;font-weight:700;}
+table.tlt th.hm{background:#3D7FC0;color:#BDE0FF;font-weight:400;}
+table.tlt td{border:0.5px solid #e8ecf0;padding:0;height:24px;}
+.tn{font-size:10px;padding:3px 7px;font-weight:600;color:#1B4F8A;background:#f0f5ff;white-space:nowrap;min-width:88px;border-right:2px solid #B5D4F4;}
+.tn.flo{color:#7D4B00;background:#FFF8E1;border-right:2px solid #E8C97A;}
+.tn.tmp{color:#7D3C98;background:#F5EEF8;border-right:2px solid #D2B4DE;}
+.tbar{display:block;height:22px;line-height:22px;text-align:center;font-size:8px;font-weight:700;overflow:hidden;white-space:nowrap;}
+.t-pre{background:#B5D4F4;color:#0C447C;}
+.t-adm{background:#D2B4DE;color:#6C3483;}
+.t-reu{background:#FAC775;color:#784212;}
+.t-acc{background:#FFE066;color:#7D6000;}
+.t-mid{background:#F9E79F;color:#7D6608;font-style:italic;}
+.t-pr-row td{background:#f0f5ff!important;text-align:center;font-size:9px;color:#888;padding:1px 0;border-top:2px solid #B5D4F4!important;}
+.t-pr-a{color:#185FA5;font-weight:700;}.t-pr-3{color:#0F6E56;font-weight:700;}
+.rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:1rem;}
+.rc{background:#f0f5ff;border-radius:8px;padding:10px 13px;border:1px solid #D6EAF8;}
+.rc.tmp{background:#F5EEF8;border-color:#D2B4DE;}
+.rn{font-size:12px;font-weight:600;color:#1B4F8A;margin-bottom:3px;}
+.rn.tmp{color:#7D3C98;}
+.rv{font-size:24px;font-weight:700;color:#0F6E56;}
+.rs{font-size:10px;color:#888;}
+.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;}
+.fc{background:#fff;border:1px solid #e0e6f0;border-radius:10px;padding:1rem;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.fh{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #eee;}
+.fa{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;border:2px solid rgba(0,0,0,.1);}
+.fn{font-size:13px;font-weight:700;color:#1B4F8A;}
+.fs{font-size:11px;color:#888;}
+.fr{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #f0f0f0;font-size:11px;}
+.fr:last-child{border-bottom:none;}
+.fk{color:#888;}.fv{font-weight:600;color:#333;}
+.fv.gn{color:#0F6E56;}.fv.bl{color:#185FA5;}.fv.or{color:#9A6700;}.fv.rd{color:#A32D2D;}
+.pb{background:#f0f5ff;border-radius:10px;padding:1rem;margin-bottom:1rem;border:1px solid #D6EAF8;}
+.pb-ttl{font-size:14px;font-weight:700;color:#1B4F8A;margin-bottom:.4rem;}
+.pb-sub{font-size:11px;color:#666;margin-bottom:.8rem;}
+.pb-grp{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:.5rem;}
+.ctx{display:none;position:fixed;z-index:1000;background:#fff;border:1px solid #ddd;border-radius:8px;min-width:185px;box-shadow:0 4px 16px rgba(0,0,0,.12);}
+.ctx.on{display:block;}
+.ci{padding:8px 13px;font-size:12px;cursor:pointer;color:#333;}
+.ci:hover{background:#f0f5ff;color:#185FA5;}
+.ci.aci{background:#EAFAF1;color:#1E8449;font-weight:600;}
+.csep{border-top:1px solid #eee;margin:3px 0;}
+.mb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:2000;align-items:center;justify-content:center;}
+.mb.on{display:flex;}
+.md{background:#fff;border-radius:12px;border:1px solid #ddd;padding:1.3rem;width:310px;box-shadow:0 8px 32px rgba(0,0,0,.18);}
+.md.wide{width:380px;}
+.mt{font-size:14px;font-weight:700;margin-bottom:.8rem;color:#1B4F8A;}
+.md label{font-size:11px;color:#666;display:block;margin-bottom:3px;margin-top:9px;font-weight:600;}
+.md input[type=text],.md input[type=number],.md select{width:100%;font-size:12px;padding:6px 9px;border-radius:7px;border:1px solid #ddd;background:#fff;color:#333;outline:none;}
+.md input:focus,.md select:focus{border-color:#185FA5;box-shadow:0 0 0 2px rgba(24,95,165,.15);}
+.midi-opts{display:flex;flex-direction:column;gap:6px;margin-top:7px;}
+.midi-opt{display:flex;align-items:center;gap:8px;font-size:12px;color:#333;cursor:pointer;padding:7px 10px;border-radius:7px;border:1px solid #e0e0e0;transition:all .15s;}
+.midi-opt:hover{background:#f0f5ff;border-color:#185FA5;}
+.midi-opt.sel{background:#EAFAF1;border-color:#1E8449;color:#145A32;font-weight:600;}
+.ma{display:flex;gap:7px;margin-top:1rem;justify-content:flex-end;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.mc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:6px;}
+.mc-lbl{display:flex;align-items:center;gap:5px;font-size:11px;cursor:pointer;padding:4px 7px;border-radius:5px;border:1px solid #eee;background:#fafafa;}
+
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="hdr">
+  <div>
+    <div class="ttl">&#127973; Horaires Accueil &#8212; Centre de Sant&#233; de l'Ambl&#232;ve</div>
+    <div class="sttl">G&#233;n&#233;rateur mensuel complet &#183; Sauvegarde automatique</div>
+  </div>
+  <div class="ctrls">
+    <select id="sm"></select>
+    <select id="sy"></select>
+    <button class="btn" onclick="initGrid()">&#8635; Actualiser</button>
+    <span class="sv" id="sv">&#10003; Sauvegard&#233;</span>
+    <button class="btn bor" onclick="opnAddTemp()">+ Membre temporaire</button>
+    <button class="btn br" onclick="doReset()">R&#233;initialiser</button>
+    <button class="btn bg" onclick="doExcel()">&#128202; Excel</button>
+    <button class="btn bb" onclick="doPrint()">&#128438; Timeline A3</button>
+    <button class="btn" style="background:#0F6E56;color:#fff;border-color:#0F6E56;" onclick="document.getElementById('import-conges-input').click()">&#128229; Importer cong&#233;s</button>
+    <input type="file" id="import-conges-input" accept=".json" style="display:none;" onchange="importConges(this)">
+    <button class="btn bp" onclick="sw('prestation',null)">&#128196; Fiches prestation</button>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" data-t="horaire" onclick="sw('horaire',this)">&#128197; Tableau horaire</button>
+  <button class="tab" data-t="timeline" onclick="sw('timeline',this)">&#9201; Timeline</button>
+  <button class="tab" data-t="rotations" onclick="sw('rotations',this)">&#8635; Rotations</button>
+  <button class="tab" data-t="fiches" onclick="sw('fiches',this)">&#128203; Fiches r&#233;sum&#233;</button>
+  <button class="tab" data-t="prestation" onclick="sw('prestation',this)">&#128196; Fiches prestation</button>
+  <button class="tab" data-t="heures" onclick="sw('heures',this)">&#9203; Tableau des heures</button>
+</div>
+
+<div id="p-horaire" class="panel">
+  <div id="temp-section" style="display:none" class="temp-sec">
+    <div class="temp-sec-title">&#128101; Membres temporaires ce mois-ci <span id="temp-count" style="font-size:11px;font-weight:400;color:#888"></span></div>
+    <div class="temp-list" id="temp-list"></div>
+  </div>
+  <div id="copy-bar">
+  <span id="copy-bar-txt"></span>
+  <button class="cbb" id="copy-bar-btn" onclick="copyBarAction()" style="display:none"></button>
+  <button class="cbb red" onclick="clearSel()">&#10005; Annuler</button>
+</div>
+<div class="ib">Horaires fixes pr&#233;-remplis (bordure color&#233;e). Jours f&#233;ri&#233;s belges automatiques. <strong>Clic gauche</strong> = modifier &#183; <strong>Clic droit</strong> = options</div>
+  <div class="sg" id="sg"></div>
+  <div class="gw"><table class="ht" id="gt"></table></div>
+</div>
+
+<div id="p-timeline" class="panel" style="display:none">
+  <div class="tlc2">
+    <span style="font-size:12px;color:#666;font-weight:600">Semaine :</span>
+    <button class="wbtn active" onclick="selW(0,this)">Sem 1</button>
+    <button class="wbtn" onclick="selW(1,this)">Sem 2</button>
+    <button class="wbtn" onclick="selW(2,this)">Sem 3</button>
+    <button class="wbtn" onclick="selW(3,this)">Sem 4</button>
+    <button class="wbtn" onclick="selW(4,this)">Sem 5</button>
+  </div>
+  <div class="leg">
+    <div class="li"><div class="ld" style="background:#B5D4F4"></div>Pr&#233;sence</div>
+    <div class="li"><div class="ld" style="background:#FFE066"></div>Accueil devant &#8593;</div>
+    <div class="li"><div class="ld" style="background:#D2B4DE"></div>Administratif</div>
+    <div class="li"><div class="ld" style="background:#FAC775"></div>R&#233;union</div>
+    <div class="li"><div class="ld" style="background:#D4EED4"></div>Pause 12h&#8211;12h30</div>
+    <div class="li"><div class="ld" style="background:#A9DFBF"></div>Pause 12h30&#8211;13h</div>
+  </div>
+  <div class="tl-wrap" id="tlc2"></div>
+</div>
+
+<div id="p-rotations" class="panel" style="display:none">
+  <div class="ib">Tours d'accueil devant calcul&#233;s automatiquement. &#201;quilibr&#233; entre toutes les accueillantes pr&#233;sentes (&#8805;3).</div>
+  <div class="rg" id="rc"></div>
+  <div style="overflow-x:auto" id="rd"></div>
+</div>
+
+<div id="p-fiches" class="panel" style="display:none">
+  <div style="display:flex;gap:8px;margin-bottom:1rem">
+    <button class="btn bb" onclick="printFiches()">&#128438; Imprimer fiches r&#233;sum&#233; (A4)</button>
+  </div>
+  <div class="fg" id="fg"></div>
+</div>
+
+<div id="p-prestation" class="panel" style="display:none">
+  <div class="pb">
+    <div class="pb-ttl">&#128196; Fiches de prestation l&#233;gales</div>
+    <div class="pb-sub">G&#233;n&#233;r&#233;es automatiquement &#224; partir des horaires saisis.</div>
+    <div style="font-size:11px;font-weight:600;color:#666;margin-bottom:5px">Membres permanents &#224; horaire variable :</div>
+    <div class="pb-grp">
+      <button class="btn bp" onclick="genPrestation('Jennifer Riga')">&#128196; Jennifer Riga</button>
+      <button class="btn bp" onclick="genPrestation('Florence Ahn')">&#128196; Florence Ahn</button>
+      <button class="btn bp" onclick="genPrestation('perm')">&#128196; Les deux</button>
+    </div>
+    <div style="font-size:11px;font-weight:600;color:#666;margin-bottom:5px;margin-top:10px" id="temp-prest-label" style="display:none">Membres temporaires :</div>
+    <div class="pb-grp" id="temp-prest-btns"></div>
+  </div>
+  <div id="prest-preview"></div>
+</div>
+
+<div id="p-heures" class="panel" style="display:none">
+  <div class="ib">Heures nettes par jour (pause midi d&#233;duite). <strong>Clic sur une case Cong&#233;</strong> pour ajuster les heures. &#9888; = objectif hebdo non atteint.</div>
+  <div class="ghw"><table class="ht hht" id="ht"></table></div>
+</div>
+
+</div>
+
+<div class="ctx" id="ctx">
+  <div class="ci" id="ctx-mn" onclick="ctxMidi(null)">&#9634; Pas de pause midi</div>
+  <div class="ci" id="ctx-ma" onclick="ctxMidi('A')">&#9632; Pause 12h00&#8211;12h30</div>
+  <div class="ci" id="ctx-mb" onclick="ctxMidi('B')">&#9632; Pause 12h30&#8211;13h00</div>
+  <div class="csep"></div>
+  <div class="ci" onclick="ctxSet('repos')">Repos</div>
+  <div class="ci" onclick="ctxSet('conge')">Cong&#233;</div>
+  <div class="ci" onclick="ctxSet('ferie')">F&#233;ri&#233;</div>
+  <div class="ci" onclick="ctxSet('malade')">&#128137; Malade</div>
+  <div class="ci" onclick="ctxSet('malade-sc')">&#128137; Malade s/c</div>
+  <div class="ci" onclick="ctxSet('css')">Cong&#233; sans solde</div>
+  <div class="csep"></div>
+  <div class="ci" id="ctx-copy" onclick="ctxCopyWeek()">&#128203; Copier semaine &#8594;...</div>
+  <div class="csep"></div>
+  <div class="ci" onclick="ctxSet('')">Effacer</div>
+</div>
+
+<div class="mb" id="mdl">
+  <div class="md">
+    <div class="mt" id="mt">Saisir l'horaire</div>
+    <label>Horaire (ex: 8h-16h)</label>
+    <input type="text" id="mi" placeholder="8h-16h"/>
+    <label>Pause midi</label>
+    <div class="midi-opts">
+      <div class="midi-opt sel" id="opt-none" onclick="selMidi(null)">Pas de pause midi</div>
+      <div class="midi-opt" id="opt-a" onclick="selMidi('A')">12h00 &#8211; 12h30</div>
+      <div class="midi-opt" id="opt-b" onclick="selMidi('B')">12h30 &#8211; 13h00</div>
+    </div>
+    <div class="ma">
+      <button class="btn" onclick="closeMdl()">Annuler</button>
+      <button class="btn bg" onclick="saveMdl()">&#10003; Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<div class="mb" id="mdl-copy">
+  <div class="md wide">
+    <div class="mt">&#128203; Copier les horaires de la semaine</div>
+    <div style="font-size:12px;color:#666;margin-bottom:12px" id="copy-info"></div>
+    <label>Copier vers la semaine :</label>
+    <div id="copy-week-btns" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;"></div>
+    <div class="ma">
+      <button class="btn" onclick="closeCopyMdl()">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<div class="mb" id="mdl-temp">
+  <div class="md wide">
+    <div class="mt">&#128101; Ajouter un membre temporaire</div>
+    <div class="form-row">
+      <div><label>Pr&#233;nom</label><input type="text" id="tmp-prenom" placeholder="Pr&#233;nom"/></div>
+      <div><label>Nom</label><input type="text" id="tmp-nom" placeholder="Nom"/></div>
+    </div>
+    <div class="form-row">
+      <div><label>Type</label>
+        <select id="tmp-type">
+          <option>Etudiant(e)</option>
+          <option>Remplacant(e)</option>
+          <option>Interimaire</option>
+          <option>Stagiaire</option>
+          <option>CDD</option>
+          <option>Autre</option>
+        </select>
+      </div>
+      <div><label>Heures/semaine</label><input type="number" id="tmp-heures" value="19" min="1" max="38"/></div>
+    </div>
+    <label>Mois concern&#233;s</label>
+    <div class="mc-grid" id="tmp-mois-checks"></div>
+    <div class="ma">
+      <button class="btn" onclick="closeTempMdl()">Annuler</button>
+      <button class="btn bor" onclick="saveTemp()">+ Ajouter</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+// ═══════════════════════════════════════════════════════════════
+// DONNÉES FIXES
+// ═══════════════════════════════════════════════════════════════
+var MN=['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
+var MN_FR=['Janvier','F\u00e9vrier','Mars','Avril','Mai','Juin','Juillet','Ao\u00fbt','Septembre','Octobre','Novembre','D\u00e9cembre'];
+var DS=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+var DF=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+var TEMP_COLORS=['#E8DAEF','#D5EEF5','#D5F5E3','#FDEBD0','#D6EAF8','#FDEDEC'];
+
+var FX = {
+  'M\u00e9lissa':{1:{h:'7h52-18h',midi:'A'},2:{h:'7h45-15h15',midi:'A'},3:{h:'7h44-15h',midi:'A'},4:{h:'8h-15h30',midi:'A'},5:{h:'9h54-18h',midi:'A'}},
+  'Audrey':{1:{h:'8h-16h30',midi:'A'},2:{h:'8h-16h',midi:'A'},3:{h:'10h-18h',midi:'A'},4:{h:'10h06-18h',midi:'A'},5:{h:'conge',midi:null}},
+  'Doris':{1:{h:'12h30-18h',midi:null},2:{h:'8h-18h',midi:'A'},3:{h:'',midi:null},4:{h:'12h30-18h',midi:null},5:{h:'8h-18h',midi:'A'}},
+  'Jean-Michel':{1:{h:'',midi:null},2:{h:'11h-18h',midi:'A'},3:{h:'14h30-18h',midi:null},4:{h:'7h45-13h45',midi:null},5:{h:'8h-11h',midi:null}}
+};
+var ADM = {
+  'M\u00e9lissa':[{d:1,s:13,e:14},{d:4,s:11,e:15.5}],
+  'Jean-Michel':[{d:2,s:11,e:16}],
+  'Doris':[{d:5,s:11.5,e:12.5}],
+  'Audrey':[{d:4,s:10.1,e:12.5}]
+};
+var REU=[{d:2,s:13,e:14.5},{d:4,s:13,e:13.75}];
+var PERM=[
+  {n:'M\u00e9lissa',h:38,r:'temps plein',av:'ME',c:'#D6EAF8',contrat:'CDI',temp:false},
+  {n:'Jennifer Riga',h:30,r:'30h/semaine',av:'JE',c:'#E8DAEF',contrat:'CDD',temp:false},
+  {n:'Doris',h:30,r:'4/5',av:'DO',c:'#D5F5E3',contrat:'CDI',temp:false},
+  {n:'Audrey',h:30.4,r:'4/5',av:'AU',c:'#FDEDEC',contrat:'CDI',temp:false},
+  {n:'Jean-Michel',h:19,r:'mi-temps',av:'JM',c:'#FEF9E7',contrat:'CDI',temp:false},
+  {n:'Florence Ahn',h:30,r:'30h/semaine',av:'FL',c:'#FDF2E9',contrat:'CDI',temp:false}
+];
+var VAR_PERM=['Jennifer Riga','Florence Ahn'];
+var SK='csa_v7';
+var ctab='horaire', twi=0, ctxTgt=null, mdlTgt=null, mdlMidi=null;
+var selCells=[], copyBuffer=[], copyMode=false;
+var CHM={};
+var D={}, TEMPS=[];
+
+// ═══════════════════════════════════════════════════════════════
+// UTILITAIRES
+// ═══════════════════════════════════════════════════════════════
+function getM(){return parseInt(document.getElementById('sm').value);}
+function getY(){return parseInt(document.getElementById('sy').value);}
+function mKey(){return getY()+'_'+getM();}
+
+function save(){
+  try{
+    var all=JSON.parse(localStorage.getItem(SK)||'{}');
+    all[mKey()]=D; all['__temps__']=TEMPS;
+    localStorage.setItem(SK,JSON.stringify(all));
+    var el=document.getElementById('sv');
+    if(el){el.classList.add('on');setTimeout(function(){el.classList.remove('on');},2000);}
+  }catch(e){}
+}
+function load(){
+  try{
+    var all=JSON.parse(localStorage.getItem(SK)||'{}');
+    if(all['__temps__'])TEMPS=all['__temps__'];
+    if(all[mKey()]){D=all[mKey()];return true;}
+  }catch(e){}
+  return false;
+}
+
+function dow(d){return d.getDay()===0?7:d.getDay();}
+function getDays(y,m){
+  var d=new Date(y,m,1),r=[];
+  while(d.getMonth()===m){r.push(new Date(d));d.setDate(d.getDate()+1);}
+  return r;
+}
+function isWE(d){return d.getDay()===0||d.getDay()===6;}
+function fd(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function pad(n){return String(n).padStart(2,'0');}
+function getWeeks(y,m){
+  var days=getDays(y,m).filter(function(d){return !isWE(d);}),w=[],c=[];
+  days.forEach(function(d){
+    if(c.length&&d.getDay()<=c[c.length-1].getDay()){w.push(c);c=[];}
+    c.push(d);
+  });
+  if(c.length)w.push(c);
+  return w;
+}
+function fH(h){
+  if(!h||h===0)return '-';
+  var r=Math.floor(h),m=Math.round((h-r)*60);
+  return m>0?r+'h'+pad(m):r+'h';
+}
+function toHS(h){var hr=Math.floor(h),mn=Math.round((h-hr)*60);return pad(hr)+'h'+pad(mn);}
+function parseH(val){
+  if(!val||val==='repos'||val==='conge'||val==='ferie'||val==='malade'||val==='malade-sc'||val==='css')return null;
+  var m=val.replace(/[h]/g,'h').replace(/-/g,'-').match(/(\d+)h(\d{0,2})-(\d+)h(\d{0,2})/);
+  if(m){
+    var s=parseInt(m[1])+(parseInt(m[2]||0)/60);
+    var e=parseInt(m[3])+(parseInt(m[4]||0)/60);
+    return{s:s,e:e};
+  }
+  return null;
+}
+function getFeries(y){
+  var a=y%19,b=Math.floor(y/100),c=y%100,di=Math.floor(b/4),e=b%4;
+  var f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3);
+  var h2=(19*a+b-di-g+15)%30,i=Math.floor(c/4),k=c%4;
+  var l=(32+2*e+2*i-h2-k)%7,mo=Math.floor((a+11*h2+22*l)/451);
+  var mn=Math.floor((h2+l-7*mo+114)/31),dy=((h2+l-7*mo+114)%31)+1;
+  var ea=new Date(y,mn-1,dy);
+  function ad(d,n){var r=new Date(d);r.setDate(r.getDate()+n);return r;}
+  function fmt(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+  var F={};
+  [[1,1,'Nouvel An'],[5,1,'1er Mai'],[7,21,'Fete Nationale'],[8,15,'Assomption'],
+   [11,1,'Toussaint'],[11,11,'Armistice'],[12,25,'Noel']].forEach(function(x){
+    F[y+'-'+pad(x[0])+'-'+pad(x[1])]=x[2];
+  });
+  F[fmt(ad(ea,1))]='Lundi Paques';
+  F[fmt(ad(ea,39))]='Ascension';
+  F[fmt(ad(ea,50))]='Lundi Pentecote';
+  return F;
+}
+
+function task(n,d2,h){
+  var i;
+  for(i=0;i<REU.length;i++){if(REU[i].d===d2&&h>=REU[i].s&&h<REU[i].e)return 'reu';}
+  var adm=ADM[n]||[];
+  for(i=0;i<adm.length;i++){if(adm[i].d===d2&&h>=adm[i].s&&h<adm[i].e)return 'adm';}
+  return 'pre';
+}
+
+function allWorkers(){
+  var temps=TEMPS.filter(function(t){return t.mois&&t.mois.indexOf(getM()+'_'+getY())>=0;});
+  return PERM.concat(temps.map(function(t){return Object.assign({},t,{temp:true});}));
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ROTATIONS
+// ═══════════════════════════════════════════════════════════════
+function calcRotations(){
+  var W=getWeeks(getY(),getM()),rot={},cnt={};
+  allWorkers().forEach(function(w){cnt[w.n]=0;});
+  var ST=8,EN=18,SP=0.5;
+  W.forEach(function(wk,wi){
+    wk.forEach(function(d){
+      var dw=dow(d),h=ST;
+      while(h<EN){
+        var pr=allWorkers().filter(function(w){
+          if(w.n==='Florence Ahn')return false;
+          var sl=(D[w.n]||{})[d.getDate()]||{},r=parseH(sl.h||'');
+          if(!r||h<r.s||h>=r.e)return false;
+          if(sl.midi){var ms=sl.midi==='A'?12:12.5;if(h>=ms&&h<ms+0.5)return false;}
+          return task(w.n,dw,h)==='pre';
+        }).map(function(w){return w.n;});
+        if(pr.length>=3){
+          var sorted=pr.slice().sort(function(a,b){return cnt[a]-cnt[b];});
+          var p=sorted[0];
+          for(var t=h;t<h+1&&t<EN;t+=SP){
+            rot[wi+'-'+d.getDate()+'-'+Math.round(t*10)]={w:p};
+          }
+          cnt[p]=(cnt[p]||0)+1;
+          h+=1;
+        }else{h+=SP;}
+      }
+    });
+  });
+  return{rot:rot,cnt:cnt};
+}
+
+// ═══════════════════════════════════════════════════════════════
+// APPLY FIXED + FERIES
+// ═══════════════════════════════════════════════════════════════
+function applyFixed(){
+  var F=getFeries(getY()),days=getDays(getY(),getM());
+  allWorkers().forEach(function(w){
+    if(!FX[w.n])return;
+    if(!D[w.n])D[w.n]={};
+    days.forEach(function(d){
+      if(isWE(d))return;
+      var ds=fd(d);
+      var existing=D[w.n][d.getDate()];
+      var canOverwrite=!existing||existing.fx===true;
+      if(F[ds]){
+        if(canOverwrite)D[w.n][d.getDate()]={h:'ferie',midi:null,fx:true,fn:F[ds]};
+        return;
+      }
+      var fs=FX[w.n][dow(d)];
+      if(fs&&fs.h&&canOverwrite)D[w.n][d.getDate()]={h:fs.h,midi:fs.midi,fx:true};
+    });
+  });
+  VAR_PERM.concat(TEMPS.filter(function(t){return t.mois&&t.mois.indexOf(getM()+'_'+getY())>=0;}).map(function(t){return t.n;}))
+  .forEach(function(n){
+    if(!D[n])D[n]={};
+    var F2=getFeries(getY());
+    getDays(getY(),getM()).forEach(function(d){
+      if(!isWE(d)&&F2[fd(d)]&&!D[n][d.getDate()])
+        D[n][d.getDate()]={h:'ferie',midi:null,fn:F2[fd(d)]};
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// BUILD GRID
+// ═══════════════════════════════════════════════════════════════
+function buildGrid(){
+  renderTempSection();
+  var dd=getDays(getY(),getM()),F=getFeries(getY()),W=getWeeks(getY(),getM());
+  var dwm={};
+  W.forEach(function(wk,wi){wk.forEach(function(d){dwm[d.getDate()]=wi;});});
+  var workers=allWorkers();
+  var tbl=document.getElementById('gt');
+  if(!tbl)return;
+  tbl.innerHTML='';
+  var prevWH=getPrevWeekHours(getY(),getM(),workers);
+  var th='<tr><th style="min-width:100px;text-align:left;padding-left:8px;position:sticky;left:0;z-index:3;background:#EBF3FB;">Accueillante</th>';
+  if(prevWH){th+='<th style="background:#e8ecf0;color:#888;font-size:9px;max-width:55px;min-width:55px;">&lt; Sem.</th>';}
+  dd.forEach(function(d){
+    var we=isWE(d),fe=F[fd(d)];
+    var st=we?'background:#eee;color:#aaa':fe?'background:#EAFAF1;color:#1E8449':'';
+    th+='<th style="'+st+'">'+DS[d.getDay()]+'<br>'+d.getDate()+(fe?'<br><span style="font-size:7px">&#9733;</span>':'')+'</th>';
+  });
+  th+='<th>Mois</th><th>Midi</th><th>Obj.</th></tr>';
+  var thead=document.createElement('thead');
+  thead.innerHTML=th;
+  tbl.appendChild(thead);
+  var tbody=document.createElement('tbody');
+  var totH=0,lastWasTemp=false;
+  workers.forEach(function(w){
+    if(!D[w.n])D[w.n]={};
+    var isTemp=w.temp===true;
+    if(isTemp&&!lastWasTemp){
+      var sep=document.createElement('tr');
+      sep.className='tmp-sep';
+      sep.innerHTML='<td colspan="'+(dd.length+4)+'">&#128101; MEMBRES TEMPORAIRES</td>';
+      tbody.appendChild(sep);
+    }
+    lastWasTemp=isTemp;
+    var pwH=W.map(function(){return 0;}),pwM=W.map(function(){return 0;});
+    var tH=0,tM=0;
+    var tr=document.createElement('tr');
+    if(isTemp)tr.className='tmp-row';
+    var html='<td class="nc'+(isTemp?' tmp':'')+'">'+(w.n)+'<br><span style="font-weight:400;font-size:9px;color:#888">'+w.h+'h</span></td>';
+    if(prevWH){
+      var ph=prevWH[w.n]||0;
+      html+='<td style="background:#f0f0f0;text-align:center;font-size:10px;font-weight:600;color:#666;max-width:55px;">'+( ph>0?fH(ph):'—')+'</td>';
+    }
+    dd.forEach(function(d){
+      var sl=(D[w.n]||{})[d.getDate()]||{},v=sl.h||'',midi=sl.midi||null,fx=sl.fx===true,we=isWE(d);
+      var cls='sl';
+      if(we)cls+=' we';
+      else if(v==='ferie')cls+=' fe';
+      else if(v==='repos')cls+=' rp';
+      else if(v==='conge')cls+=' cg';
+      else if(v==='malade')cls+=' ml';
+      else if(v==='malade-sc')cls+=' ml-sc';
+      else if(v==='css')cls+=' css2';
+      else if(v&&midi==='A')cls+=' hma';
+      else if(v&&midi==='B')cls+=' hmb';
+      else if(v)cls+=' hv';
+      if(fx&&v&&v!=='repos'&&v!=='conge'&&v!=='ferie')cls+=midi==='A'?' fxa':midi==='B'?' fxb':' fx';
+      var mLbl=midi==='A'?'12h-12h30':midi==='B'?'12h30-13h':'';
+      var vLabel={'repos':'Repos','conge':'Congé','ferie':sl.fn||'Férié','malade':'Malade','malade-sc':'Malade s/c','css':'CSS'}[v]||v;
+      var isAbs=v==='repos'||v==='conge'||v==='malade'||v==='malade-sc'||v==='css'||v==='ferie';
+      // Horaire prévu pour les absences
+      var prevH='';
+      if(isAbs){
+        var dw2=dow(new Date(getY(),getM(),d.getDate()));
+        var fxSlot=FX[w.n]&&FX[w.n][dw2]?FX[w.n][dw2]:null;
+        if(fxSlot&&fxSlot.h&&fxSlot.h!=='conge'&&fxSlot.h!==''){
+          var hColor=(v==='malade'||v==='malade-sc')?'#fff':'#888';
+          prevH='<span style="display:block;font-size:7px;color:'+hColor+';font-style:italic;margin-top:1px;">'+fxSlot.h+'</span>';
+        }
+      }
+      var inn=isAbs?
+              '<span class="hl" style="font-size:8px">'+vLabel+'</span>'+prevH:
+              v?'<span class="hl">'+v+'</span>'+(midi?'<span class="ml">'+mLbl+'</span>':''):'';
+      var evts=(!we&&v!=='ferie')?'onclick="onCellClick(event,this)" oncontextmenu="opnCtx(event,this);return false;"':'';
+      html+='<td class="'+cls+'" data-n="'+w.n+'" data-d="'+d.getDate()+'" '+evts+'>'+inn+'</td>';
+      if(!we){
+        var r=parseH(v);
+        if(r){
+          var dur=r.e-r.s,net=midi?dur-0.5:dur;
+          tH+=net;if(midi)tM+=0.5;
+          var wi2=dwm[d.getDate()];
+          if(wi2!==undefined){pwH[wi2]+=net;if(midi)pwM[wi2]+=0.5;}
+        }
+      }
+    });
+    totH+=tH;
+    var tc=isTemp?'#7D3C98':'#185FA5';
+    html+='<td class="tc" style="color:'+tc+'">'+fH(tH)+'</td>';
+    html+='<td class="tc" style="color:#1E8449">'+(tM>0?tM.toFixed(1)+'h':'-')+'</td>';
+    html+='<td class="tc" style="color:#888">'+fH(w.h*(dd.length/7))+'</td>';
+    tr.innerHTML=html;tbody.appendChild(tr);
+    var trw=document.createElement('tr');
+    trw.className='wt'+(isTemp?' tmp-row':'');
+    var wh='<td class="wl" style="position:sticky;left:0;z-index:2;background:#EBF3FB;">&#8627;/sem.</td>';
+    if(prevWH){wh+='<td style="background:#e8e8e8;"></td>';}
+    var done={};
+    dd.forEach(function(d){
+      if(isWE(d)){wh+='<td></td>';return;}
+      var wi2=dwm[d.getDate()];
+      if(wi2===undefined||done[wi2])return;
+      done[wi2]=true;
+      var span=W[wi2].length;
+      var semTot=pwH[wi2]+(wi2===0&&prevWH?(prevWH[w.n]||0):0);
+      var semDisp=fH(pwH[wi2])+(wi2===0&&prevWH&&(prevWH[w.n]||0)>0?' (+'+fH(prevWH[w.n]||0)+')':'')+(pwM[wi2]>0?' ('+pwM[wi2].toFixed(1)+'h)':'');
+      wh+='<td colspan="'+span+'" style="text-align:center;color:'+tc+';background:'+(isTemp?'#F5EEF8':'#EBF3FB')+'">'+semDisp+'</td>';
+    });
+    wh+='<td></td><td></td><td></td>';
+    trw.innerHTML=wh;tbody.appendChild(trw);
+  });
+  tbl.appendChild(tbody);
+  var wd=dd.filter(function(d){return !isWE(d);}).length;
+  var sg=document.getElementById('sg');
+  if(sg)sg.innerHTML='<div class="sc"><div class="sl2">Jours ouvrables</div><div class="svv">'+wd+'</div></div>'+
+    '<div class="sc"><div class="sl2">Heures equipe</div><div class="svv">'+fH(totH)+'</div></div>'+
+    '<div class="sc"><div class="sl2">Personnes</div><div class="svv">'+workers.length+'</div></div>';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// TIMELINE
+// ═══════════════════════════════════════════════════════════════
+function buildSlots(){
+  var slots=[],ST=8,EN=18,SP=0.5;
+  for(var h=ST;h<EN;h+=SP)slots.push(Math.round(h*10)/10);
+  return slots;
+}
+
+function tlWorkerRow(w,d,wi,dw,rot,slots,isFlo){
+  var sl=(D[w.n]||{})[d.getDate()]||{},rng=parseH(sl.h||'');
+  var nc='tn'+(isFlo?' flo':w.temp?' tmp':'');
+  var html='<tr><td class="'+nc+'">'+w.n+'</td>';
+  var i;
+  for(i=0;i<slots.length;i++){
+    var t=slots[i];
+    var isHr=Math.round(t*2)%2===0;
+    var hrB=isHr?'2px solid rgba(0,0,0,0.25)':'1px solid rgba(0,0,0,0.07)';
+    var emB=isHr?'2px solid #C5D8EA':'1px solid #e8ecf0';
+    var isAbsence=sl.h==='conge'||sl.h==='malade'||sl.h==='malade-sc'||sl.h==='css';
+    if(isAbsence){
+      var absLbl=sl.h==='conge'?'V':sl.h==='malade'?'M':sl.h==='malade-sc'?'M!':'CSS';
+      var absFg=sl.h==='conge'?'#185FA5':sl.h==='css'?'#8E44AD':'#111';
+      if(t>=8&&t<18){
+        html+='<td style="border-right:'+emB+';padding:0;"><div style="display:block;height:22px;line-height:22px;text-align:center;font-size:9px;font-weight:900;color:'+absFg+';">'+absLbl+'</div></td>';
+      }else{
+        html+='<td style="background:#f8f9fa;border-right:'+emB+';height:24px;"></td>';
+      }
+      continue;
+    }
+    if(!rng||t<rng.s||t>=rng.e){html+='<td style="background:#f8f9fa;border-right:'+emB+';height:24px;"></td>';continue;}
+    if(sl.midi){
+      var ms=sl.midi==='A'?12:12.5;
+      if(t>=ms&&t<ms+0.5){
+        html+='<td style="border-right:'+hrB+';padding:0;"><div class="tbar" style="background:#27AE60;"></div></td>';
+        continue;
+      }
+    }
+    var tk=task(w.n,dw,t);
+    if(!isFlo){
+      var rk=wi+'-'+d.getDate()+'-'+Math.round(t*10);
+      if(rot[rk]&&rot[rk].w===w.n&&tk==='pre')tk='acc';
+    }
+    var bc='t-'+{reu:'reu',adm:'adm',acc:'acc',pre:'pre'}[tk];
+    var lb={reu:'reu',adm:'adm',acc:'&#8593;',pre:''}[tk];
+    html+='<td style="border-right:'+hrB+';padding:0;"><div class="tbar '+bc+'">'+lb+'</div></td>';
+  }
+  html+='</tr>';
+  return html;
+}
+
+function tlPresRow(d,workers,slots){
+  var html='<tr class="t-pr-row"><td style="font-size:9px;color:#888;padding:2px 6px;font-style:italic;">Presents</td>';
+  var i;
+  for(i=0;i<slots.length;i++){
+    var t=slots[i];
+    var cnt=0,isHr=Math.round(t*2)%2===0;
+    workers.forEach(function(w){
+      var sl=(D[w.n]||{})[d.getDate()]||{},r=parseH(sl.h||'');
+      if(!r||t<r.s||t>=r.e)return;
+      if(sl.midi){var ms=sl.midi==='A'?12:12.5;if(t>=ms&&t<ms+0.5)return;}
+      cnt++;
+    });
+    var cl='t-pr-row'+(cnt>=3?' t-pr-3':cnt>=1?' t-pr-a':'');
+    var bd=isHr?'2px solid #B5D4F4':'1px solid #e8ecf0';
+    html+='<td class="'+cl+'" style="border-right:'+bd+';">'+(cnt||'')+'</td>';
+  }
+  html+='</tr>';
+  return html;
+}
+
+function tlThRow(slots,floStyle){
+  var html='<tr>';
+  html+='<th style="min-width:90px;text-align:left;padding-left:8px;background:'+(floStyle?'#7D4B00':'#1B4F8A')+';color:#fff;font-size:10px;">Accueillante</th>';
+  var i;
+  for(i=0;i<slots.length;i++){
+    var t=slots[i];
+    var hh=Math.floor(t),mm=t%1>0?'30':'';
+    var isH=mm==='';
+    if(floStyle){
+      html+='<th class="'+(isH?'hh':'hm')+'" style="background:'+(isH?'#A0670A':'#B87A1E')+';color:'+(isH?'#fff':'#FFE082')+';">'+hh+'h'+mm+'</th>';
+    }else{
+      html+='<th class="'+(isH?'hh':'hm')+'">'+hh+'h'+mm+'</th>';
+    }
+  }
+  html+='</tr>';
+  return html;
+}
+
+function buildDayBlock(d,wi,rot,workers,slots){
+  var dw=dow(d);
+  var dd2=pad(d.getDate())+'/'+pad(d.getMonth()+1);
+  var ayw=workers.filter(function(w){return w.n!=='Florence Ahn';});
+  var flo=null;
+  workers.forEach(function(w){if(w.n==='Florence Ahn')flo=w;});
+  var html='<div class="tl-day">';
+  html+='<div class="tl-day-hdr"><span>'+DF[d.getDay()]+' '+dd2+'</span><span style="font-size:10px;opacity:.8">Aywaille</span></div>';
+  html+='<div style="overflow-x:auto"><table class="tlt"><thead>'+tlThRow(slots,false)+'</thead><tbody>';
+  ayw.forEach(function(w){html+=tlWorkerRow(w,d,wi,dw,rot,slots,false);});
+  html+=tlPresRow(d,ayw,slots);
+  html+='</tbody></table></div>';
+  if(flo){
+    var fs=(D['Florence Ahn']||{})[d.getDate()]||{};
+    if(parseH(fs.h||'')||fs.h==='repos'||fs.h==='conge'||fs.h==='ferie'){
+      html+='<div class="tl-flo-sep">Comblain-au-Pont &#8212; Florence Ahn</div>';
+      html+='<div style="overflow-x:auto"><table class="tlt"><thead>'+tlThRow(slots,true)+'</thead><tbody>';
+      html+=tlWorkerRow(flo,d,wi,dw,rot,slots,true);
+      html+='</tbody></table></div>';
+    }
+  }
+  html+='</div>';
+  return html;
+}
+
+function renderTL(){
+  var W=getWeeks(getY(),getM());
+  var canvas=document.getElementById('tlc2');
+  if(!canvas)return;
+  if(!W[twi]){canvas.innerHTML='<div style="padding:1rem;color:#888">Semaine non disponible.</div>';return;}
+  var wk=W[twi],rotRes=calcRotations(),rot=rotRes.rot;
+  var workers=allWorkers(),slots=buildSlots();
+  var html='';
+  wk.forEach(function(d){html+=buildDayBlock(d,twi,rot,workers,slots);});
+  canvas.innerHTML=html;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ROTATIONS TAB
+// ═══════════════════════════════════════════════════════════════
+function renderRot(){
+  var rotRes=calcRotations(),rot=rotRes.rot,cnt=rotRes.cnt;
+  var W=getWeeks(getY(),getM()),workers=allWorkers();
+  var rc=document.getElementById('rc');
+  if(rc)rc.innerHTML=workers.map(function(w){
+    var isTemp=w.temp===true;
+    return '<div class="rc'+(isTemp?' tmp':'')+'"><div class="rn'+(isTemp?' tmp':'')+'">'+w.n+'</div>'+
+      '<div class="rv">'+(cnt[w.n]||0)+'</div><div class="rs">tour'+(( cnt[w.n]||0)>1?'s':'')+" d'accueil</div></div>";
+  }).join('');
+  var seen={},rows='';
+  W.forEach(function(wk,wi){
+    wk.forEach(function(d){
+      var lw=null,ls=null,t,k,r,prev;
+      var ST=8,EN=18,SP=0.5;
+      for(t=ST;t<=EN;t+=SP){
+        k=wi+'-'+d.getDate()+'-'+Math.round(t*10);
+        r=rot[k];var w=r?r.w:null;
+        if(w!==lw){
+          if(lw&&ls!==null){
+            var key=wi+'-'+d.getDate()+'-'+ls;
+            if(!seen[key]){seen[key]=1;rows+='<tr><td style="text-align:center">Sem.'+(wi+1)+'</td><td>'+DF[d.getDay()]+' '+d.getDate()+'</td><td>'+fH(ls)+'-'+fH(t)+'</td><td style="color:#0E6655;font-weight:600">'+lw+'</td></tr>';}
+          }
+          lw=w;ls=t;
+        }
+      }
+    });
+  });
+  var rd=document.getElementById('rd');
+  if(rd)rd.innerHTML='<table class="ht" style="font-size:11px;margin-top:.8rem"><thead><tr><th>Semaine</th><th>Jour</th><th>Creneau</th><th>Devant</th></tr></thead><tbody>'+rows+'</tbody></table>';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// FICHES RESUME
+// ═══════════════════════════════════════════════════════════════
+function renderFiches(){
+  var dd=getDays(getY(),getM()),F=getFeries(getY()),W=getWeeks(getY(),getM());
+  var rotRes=calcRotations(),ac=rotRes.cnt;
+  var wd=dd.filter(function(d){return !isWE(d)&&!F[fd(d)];}).length;
+  var dwm={};W.forEach(function(wk,wi){wk.forEach(function(d){dwm[d.getDate()]=wi;});});
+  var fg=document.getElementById('fg');
+  if(!fg)return;
+  fg.innerHTML=allWorkers().map(function(w){
+    var isTemp=w.temp===true;
+    var tH=0,tM=0,nc=0,nf=0,nw=0,pwH=W.map(function(){return 0;});
+    dd.forEach(function(d){
+      if(isWE(d))return;
+      var sl=(D[w.n]||{})[d.getDate()]||{},v=sl.h||'',r=parseH(v);
+      if(v==='conge')nc++;else if(v==='ferie')nf++;
+      else if(r){var dur=r.e-r.s,net=sl.midi?dur-0.5:dur;tH+=net;if(sl.midi)tM+=0.5;nw++;var wi=dwm[d.getDate()];if(wi!==undefined)pwH[wi]+=net;}
+    });
+    var obj=w.h*(dd.length/7),diff=tH-obj;
+    return '<div class="fc" style="'+(isTemp?'border:2px solid #D2B4DE;':'')+'">'+
+      '<div class="fh"><div class="fa" style="background:'+w.c+'">'+w.av+'</div>'+
+      '<div><div class="fn">'+w.n+'</div><div class="fs">'+w.h+'h/sem - '+w.r+'</div></div></div>'+
+      '<div class="fr"><span class="fk">Heures travaillees</span><span class="fv bl">'+fH(tH)+'</span></div>'+
+      '<div class="fr"><span class="fk">Objectif</span><span class="fv">'+fH(obj)+'</span></div>'+
+      '<div class="fr"><span class="fk">Ecart</span><span class="fv '+(diff>=0?'gn':'rd')+'">'+(diff>=0?'+':'')+fH(Math.abs(diff))+'</span></div>'+
+      '<div class="fr"><span class="fk">Pauses midi</span><span class="fv">'+(tM>0?tM.toFixed(1)+'h':'-')+'</span></div>'+
+      '<div class="fr"><span class="fk">Jours travailles</span><span class="fv">'+nw+'/'+wd+'</span></div>'+
+      '<div class="fr"><span class="fk">Conges</span><span class="fv or">'+nc+'j</span></div>'+
+      '<div class="fr"><span class="fk">Feries</span><span class="fv gn">'+nf+'j</span></div>'+
+      '<div class="fr"><span class="fk">Tours accueil devant</span><span class="fv" style="color:#0E6655">'+(ac[w.n]||0)+'</span></div>'+
+      '<div style="margin-top:6px;font-size:10px;color:#888;margin-bottom:3px">Par semaine :</div>'+
+      W.map(function(wk,wi){return '<div class="fr"><span class="fk" style="font-size:10px">Semaine '+(wi+1)+'</span><span class="fv bl" style="font-size:10px">'+fH(pwH[wi])+'</span></div>';}).join('')+
+      '</div>';
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// FICHES PRESTATION
+// ═══════════════════════════════════════════════════════════════
+function genPrestation(who){
+  var dd=getDays(getY(),getM()),F=getFeries(getY()),W=getWeeks(getY(),getM());
+  var workers=allWorkers();
+  var targets;
+  if(who==='perm')targets=workers.filter(function(w){return VAR_PERM.indexOf(w.n)>=0;});
+  else if(who==='all-temp')targets=workers.filter(function(w){return w.temp===true;});
+  else targets=workers.filter(function(w){return w.n===who;});
+  var html='';
+  targets.forEach(function(w){
+    var totalMois=0,body='';
+    W.forEach(function(wk,wi){
+      var totalSem=0;
+      wk.forEach(function(d,di){
+        var ds=fd(d),ferieNom=F[ds],jourNom=DF[d.getDay()];
+        var dateDisp=pad(d.getDate())+'/'+pad(d.getMonth()+1);
+        var sl=(D[w.n]||{})[d.getDate()]||{},range=parseH(sl.h||''),midi=sl.midi||null;
+        var semLbl=di===0?'Sem.'+(wi+1):'';
+        var bg=di%2===0?'#fff':'#f9fafb';
+        if(ferieNom){
+          body+='<tr style="background:#f0faf0"><td style="background:#e8f5e9;font-weight:600;font-size:11px;padding:4px 7px">'+semLbl+'</td><td style="padding:4px 7px;font-size:11px">'+jourNom+'</td><td style="padding:4px 7px;font-size:11px;text-align:center">'+dateDisp+'</td><td colspan="3" style="padding:4px 7px;font-size:11px;color:#1E8449;font-style:italic;text-align:center">'+ferieNom+'</td><td style="padding:4px 7px;font-size:11px;color:#1E8449;font-style:italic">Jour ferie</td></tr>';
+        }else if(!range||sl.h==='repos'||sl.h==='conge'){
+          var lbl=sl.h==='repos'?'Repos':sl.h==='conge'?'Conge':'-';
+          body+='<tr style="background:'+bg+'"><td style="background:#EBF3FB;font-weight:600;font-size:11px;padding:4px 7px">'+semLbl+'</td><td style="padding:4px 7px;font-size:11px">'+jourNom+'</td><td style="padding:4px 7px;font-size:11px;text-align:center">'+dateDisp+'</td><td style="padding:4px 7px;font-size:11px;text-align:center;color:#999">-</td><td style="padding:4px 7px;font-size:11px;text-align:center;color:#999">-</td><td style="padding:4px 7px;font-size:11px;text-align:center;color:#999">-</td><td style="padding:4px 7px;font-size:11px;color:#888;font-style:italic">'+lbl+'</td></tr>';
+        }else if(midi){
+          var mS=midi==='A'?12:12.5,mE=midi==='A'?12.5:13;
+          var durMat=mS-range.s,durApm=range.e-mE,durJ=durMat+durApm;
+          totalSem+=durJ;totalMois+=durJ;
+          body+='<tr style="background:'+bg+'"><td style="background:#EBF3FB;font-weight:600;font-size:11px;padding:3px 7px;vertical-align:top" rowspan="3">'+semLbl+'</td><td style="padding:3px 7px;font-size:11px">'+jourNom+'</td><td style="padding:3px 7px;font-size:11px;text-align:center">'+dateDisp+'</td><td style="padding:3px 7px;font-size:11px;text-align:center;font-weight:600">'+toHS(range.s)+'</td><td style="padding:3px 7px;font-size:11px;text-align:center;font-weight:600">'+toHS(mS)+'</td><td style="padding:3px 7px;font-size:11px;text-align:center;font-weight:600;color:#185FA5">'+fH(durMat)+'</td><td></td></tr>';
+          body+='<tr style="background:'+bg+'"><td style="padding:3px 7px;font-size:11px;color:#888;font-style:italic" colspan="2">Pause '+toHS(mS)+'-'+toHS(mE)+'</td><td style="padding:3px 7px;font-size:11px;text-align:center;font-weight:600">'+toHS(mE)+'</td><td style="padding:3px 7px;font-size:11px;text-align:center;font-weight:600">'+toHS(range.e)+'</td><td style="padding:3px 7px;font-size:11px;text-align:center;font-weight:600;color:#185FA5">'+fH(durApm)+'</td><td style="padding:3px 7px;font-size:10px;color:#888;font-style:italic">Pause</td></tr>';
+          body+='<tr style="background:#EBF3FB"><td colspan="3" style="padding:3px 7px;font-size:11px;text-align:right;font-weight:600;color:#185FA5">Total journee :</td><td></td><td style="padding:3px 7px;font-size:12px;text-align:center;font-weight:700;color:#185FA5">'+fH(durJ)+'</td><td></td></tr>';
+        }else{
+          var dur=range.e-range.s;totalSem+=dur;totalMois+=dur;
+          body+='<tr style="background:'+bg+'"><td style="background:#EBF3FB;font-weight:600;font-size:11px;padding:4px 7px">'+semLbl+'</td><td style="padding:4px 7px;font-size:11px">'+jourNom+'</td><td style="padding:4px 7px;font-size:11px;text-align:center">'+dateDisp+'</td><td style="padding:4px 7px;font-size:11px;text-align:center;font-weight:600">'+toHS(range.s)+'</td><td style="padding:4px 7px;font-size:11px;text-align:center;font-weight:600">'+toHS(range.e)+'</td><td style="padding:4px 7px;font-size:12px;text-align:center;font-weight:700;color:#185FA5">'+fH(dur)+'</td><td></td></tr>';
+        }
+      });
+      body+='<tr style="background:#D6EAF8;border-top:2px solid #85C1E9"><td colspan="5" style="padding:5px 7px;font-size:11px;font-weight:700;color:#1B4F8A;text-align:right">Total semaine '+(wi+1)+' :</td><td style="padding:5px 7px;font-size:13px;font-weight:700;color:#1B4F8A;text-align:center">'+fH(totalSem)+'</td><td></td></tr>';
+    });
+    var isTemp=w.temp===true;
+    var hdrColor=isTemp?'#6B3FA0':'#1B4F8A';
+    var subBg=isTemp?'#E8DAEF':'#D6E4F0';
+    html+='<div style="border:1px solid #B5D4F4;border-radius:10px;overflow:hidden;margin-bottom:2rem;font-family:Arial,sans-serif;box-shadow:0 2px 8px rgba(27,79,138,.1)">';
+    html+='<div style="background:'+hdrColor+';color:#fff;padding:11px 16px;font-size:16px;font-weight:700">Centre de Sante de l\'Ambleve</div>';
+    html+='<div style="background:'+subBg+';color:'+hdrColor+';padding:7px 16px;font-size:12px;font-weight:700;border-bottom:1px solid #dde">FEUILLE DE PRESTATION MENSUELLE'+(isTemp?' - '+w.contrat.toUpperCase():'')+'</div>';
+    html+='<div style="padding:10px 16px;display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#f8fafd;font-size:12px;border-bottom:1px solid #e0e6f0">';
+    html+='<div><span style="color:#888">Travailleur : </span><strong style="color:'+hdrColor+'">'+w.n+'</strong></div>';
+    html+='<div><span style="color:#888">Type : </span><strong>'+w.contrat+'</strong></div>';
+    html+='<div><span style="color:#888">Regime : </span><strong>'+w.r+'</strong></div>';
+    html+='<div><span style="color:#888">Periode : </span><strong>'+MN_FR[getM()]+' '+getY()+'</strong></div></div>';
+    html+='<table style="width:100%;border-collapse:collapse"><thead><tr style="background:'+hdrColor+';color:#fff">';
+    html+='<th style="padding:6px 7px;font-size:11px">Sem.</th><th style="padding:6px 7px;font-size:11px">Jour</th><th style="padding:6px 7px;font-size:11px">Date</th>';
+    html+='<th style="padding:6px 7px;font-size:11px">Debut</th><th style="padding:6px 7px;font-size:11px">Fin</th><th style="padding:6px 7px;font-size:11px">Total</th><th style="padding:6px 7px;font-size:11px">Observations</th>';
+    html+='</tr></thead><tbody>'+body+'</tbody></table>';
+    html+='<div style="background:'+hdrColor+';padding:8px 16px;display:flex;align-items:center;justify-content:flex-end;gap:12px">';
+    html+='<span style="color:rgba(255,255,255,.8);font-size:13px;font-weight:600">TOTAL MENSUEL :</span>';
+    html+='<span style="color:#fff;font-size:18px;font-weight:700;background:rgba(255,255,255,.2);padding:4px 16px;border-radius:6px">'+fH(totalMois)+'</span></div>';
+    html+='<div style="padding:18px 16px;display:grid;grid-template-columns:1fr 30px 1fr;gap:12px;background:#fff">';
+    html+='<div style="border:1px solid #ddd;border-radius:8px;padding:12px"><div style="font-size:12px;font-weight:700;margin-bottom:4px;color:'+hdrColor+'">Signature de l\'employe(e)</div>';
+    html+='<div style="font-size:10px;color:#888;font-style:italic;margin-bottom:50px">(Lu et approuve)</div>';
+    html+='<div style="font-size:11px;color:#555;border-top:1px solid #eee;padding-top:6px">Date : _____ / _____ / __________</div></div>';
+    html+='<div></div>';
+    html+='<div style="border:1px solid #ddd;border-radius:8px;padding:12px"><div style="font-size:12px;font-weight:700;margin-bottom:4px;color:'+hdrColor+'">Signature de l\'employeur</div>';
+    html+='<div style="font-size:10px;color:#888;font-style:italic;margin-bottom:50px">Centre de Sante de l\'Ambleve</div>';
+    html+='<div style="font-size:11px;color:#555;border-top:1px solid #eee;padding-top:6px">Date : _____ / _____ / __________</div></div>';
+    html+='</div></div>';
+  });
+  var prev='<div style="display:flex;gap:8px;margin-bottom:1rem"><button class="btn bp" onclick="printPrest()">Imprimer / PDF</button></div><div id="pc">'+html+'</div>';
+  var pp=document.getElementById('prest-preview');
+  if(pp)pp.innerHTML=prev;
+}
+
+function printPrest(){
+  var c=document.getElementById('pc');
+  if(!c)return;
+  var win=window.open('','_blank');
+  if(!win){alert('Activez les popups pour imprimer.');return;}
+  win.document.open();
+  win.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Fiches Prestation</title>');
+  win.document.write('<style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Arial,sans-serif;background:#fff;color:#000;padding:8mm;}');
+  win.document.write('@page{size:A4;margin:10mm;}table{width:100%;border-collapse:collapse;}th,td{border:0.5px solid #ddd;}</style>');
+  win.document.write('</head><body>');
+  win.document.write(c.innerHTML);
+  win.document.write('</body></html>');
+  win.document.close();
+  win.focus();
+  setTimeout(function(){if(win&&!win.closed)win.print();},500);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// IMPRESSION TIMELINE A3
+// ═══════════════════════════════════════════════════════════════
+function doPrint(){
+  var W=getWeeks(getY(),getM()),rotRes=calcRotations(),rot=rotRes.rot;
+  var workers=allWorkers(),slots=buildSlots();
+  var printCSS='*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Arial,sans-serif;background:#fff;color:#000;}@page{size:A3 landscape;margin:6mm;}.wp{page-break-after:always;page-break-inside:avoid;padding:3mm;}.ph{background:#1B4F8A;color:#fff;padding:2mm 4mm;font-size:9pt;font-weight:bold;display:flex;justify-content:space-between;margin-bottom:2mm;}.lg{display:flex;gap:2mm;flex-wrap:wrap;margin-bottom:2mm;}.lb{font-size:6pt;padding:1mm 2mm;border-radius:1mm;font-weight:bold;}.dy{border:0.5px solid #1B4F8A;border-radius:2px;overflow:hidden;margin-bottom:3mm;page-break-inside:avoid;break-inside:avoid;}.dh{background:#1B4F8A;color:#fff;font-size:8pt;font-weight:bold;padding:1.5mm 2mm;display:flex;justify-content:space-between;}.fs{background:#7D4B00;color:#fff;font-size:7pt;padding:1mm 2mm;}table{border-collapse:collapse;width:100%;table-layout:fixed;}th,td{border:0.3px solid #ccc;padding:0;text-align:center;font-size:6pt;}.nm-th{text-align:left;padding-left:2mm;background:#1B4F8A;color:#fff;width:20mm;font-size:6.5pt;}.flo-th{background:#7D4B00;}.hh{background:#1B4F8A;color:#fff;font-weight:bold;font-size:6pt;padding:1mm 0;}.hm{background:#2E6DA4;color:#BDE0FF;font-size:5pt;padding:1mm 0;}.fhh{background:#A0670A;color:#fff;font-weight:bold;}.fhm{background:#B87A1E;color:#FFE082;}.nm{text-align:left;padding:1mm;font-weight:bold;font-size:6.5pt;white-space:nowrap;overflow:hidden;background:#f0f5ff;color:#1B4F8A;border-right:1.5px solid #B5D4F4;height:7mm;line-height:5mm;}.tmp-nm{background:#F5EEF8;color:#7D3C98;border-right-color:#D2B4DE;}.flo-nm{background:#FFF8E1;color:#7D4B00;border-right-color:#E8C97A;}.em{background:#f9fafb;height:7mm;}.bx{font-weight:bold;font-size:6pt;height:7mm;line-height:6mm;vertical-align:middle;}.pr{background:#B5D4F4;color:#0C447C;}.ad{background:#D2B4DE;color:#6C3483;}.re{background:#FAC775;color:#784212;}.ac{background:#FFE066;color:#7D6000;}.mi{background:#F9E79F;color:#7D6608;font-style:italic;}.pl{font-size:5.5pt;color:#888;font-style:italic;background:#f0f5ff;padding:1mm;height:5mm;line-height:3mm;text-align:left;}.cnt{font-size:5.5pt;background:#f9fafb;color:#ccc;height:5mm;line-height:3mm;}.ca{background:#EBF3FB;color:#185FA5;font-weight:bold;}.c3{background:#E8F8F5;color:#0E6655;font-weight:bold;}';
+
+  function pThRow(floStyle){
+    var r='<tr><th class="nm-th'+(floStyle?' flo-th':'')+'">Accueillante</th>';
+    var i;
+    for(i=0;i<slots.length;i++){
+      var t=slots[i],hh=Math.floor(t),mm=t%1>0?'30':'',isH=mm==='';
+      var cl=floStyle?(isH?'hh fhh':'hm fhm'):(isH?'hh':'hm');
+      r+='<th class="'+cl+'">'+hh+'h'+mm+'</th>';
+    }
+    r+='</tr>';
+    return r;
+  }
+
+  function pWRow(w,d,wi,dw,isFlo){
+    var sl=(D[w.n]||{})[d.getDate()]||{},rng=parseH(sl.h||'');
+    var isTemp=w.temp===true;
+    var nc='nm'+(isFlo?' flo-nm':isTemp?' tmp-nm':'');
+    var r='<tr><td class="'+nc+'">'+w.n+'</td>';
+    var i;
+    for(i=0;i<slots.length;i++){
+      var t=slots[i];
+      var isHr=Math.round(t*2)%2===0;
+      var bd=isHr?'2px solid rgba(0,0,0,0.25)':'1px solid rgba(0,0,0,0.07)';
+      var eb=isHr?'2px solid #C5D8EA':'1px solid #e8ecf0';
+      var isAbs2=sl.h==='conge'||sl.h==='malade'||sl.h==='malade-sc'||sl.h==='css';
+      if(isAbs2){
+        var al2=sl.h==='conge'?'V':sl.h==='malade'?'M':sl.h==='malade-sc'?'M!':'CSS';
+        var af2=sl.h==='conge'?'#185FA5':sl.h==='css'?'#8E44AD':'#111';
+        if(t>=8&&t<18){r+='<td style="border-right:'+eb+';padding:0;"><div style="display:block;height:7mm;line-height:6mm;text-align:center;font-size:7pt;font-weight:900;color:'+af2+';">'+al2+'</div></td>';}
+        else{r+='<td class="em" style="border-right:'+eb+';"></td>';}
+        continue;
+      }
+      if(!rng||t<rng.s||t>=rng.e){r+='<td class="em" style="border-right:'+eb+';"></td>';continue;}
+      if(sl.midi){var ms=sl.midi==='A'?12:12.5;if(t>=ms&&t<ms+0.5){r+='<td style="border-right:'+bd+';padding:0;"><div class="bx" style="background:#27AE60;height:7mm;line-height:6mm;"></div></td>';continue;}}
+      var tk=task(w.n,dw,t);
+      if(!isFlo){var rk=wi+'-'+d.getDate()+'-'+Math.round(t*10);if(rot[rk]&&rot[rk].w===w.n&&tk==='pre')tk='acc';}
+      var cl=tk==='reu'?'re':tk==='adm'?'ad':tk==='acc'?'ac':'pr';
+      var lb=tk==='reu'?'R':tk==='adm'?'A':tk==='acc'?'&#8593;':'';
+      r+='<td class="bx '+cl+'" style="border-right:'+bd+';">'+lb+'</td>';
+    }
+    r+='</tr>';
+    return r;
+  }
+
+  function pPresRow(d,ayw){
+    var r='<tr><td class="pl">Presents</td>';
+    var i;
+    for(i=0;i<slots.length;i++){
+      var t=slots[i],c=0,isHr=Math.round(t*2)%2===0;
+      ayw.forEach(function(w){
+        var s=(D[w.n]||{})[d.getDate()]||{},rv=parseH(s.h||'');
+        if(!rv||t<rv.s||t>=rv.e)return;
+        if(s.midi){var ms=s.midi==='A'?12:12.5;if(t>=ms&&t<ms+0.5)return;}
+        c++;
+      });
+      var cl='cnt'+(c>=3?' c3':c>=1?' ca':'');
+      var bd=isHr?'2px solid #B5D4F4':'1px solid #e8ecf0';
+      r+='<td class="'+cl+'" style="border-right:'+bd+';">'+(c||'')+'</td>';
+    }
+    r+='</tr>';
+    return r;
+  }
+
+  function pDayBlock(d,wi){
+    var dw=dow(d);
+    var dd2=pad(d.getDate())+'/'+pad(d.getMonth()+1);
+    var ayw=workers.filter(function(w){return w.n!=='Florence Ahn';});
+    var flo=null;
+    workers.forEach(function(w){if(w.n==='Florence Ahn')flo=w;});
+    var r='<div class="dy">';
+    r+='<div class="dh"><span>'+DF[d.getDay()]+' '+dd2+'</span><span>Aywaille</span></div>';
+    r+='<table><thead>'+pThRow(false)+'</thead><tbody>';
+    ayw.forEach(function(w){r+=pWRow(w,d,wi,dw,false);});
+    r+=pPresRow(d,ayw);
+    r+='</tbody></table>';
+    if(flo){
+      var fs=(D['Florence Ahn']||{})[d.getDate()]||{};
+      if(parseH(fs.h||'')||fs.h==='repos'||fs.h==='conge'||fs.h==='ferie'){
+        r+='<div class="fs">Comblain &#8212; Florence Ahn</div>';
+        r+='<table><thead>'+pThRow(true)+'</thead><tbody>';
+        r+=pWRow(flo,d,wi,dw,true);
+        r+='</tbody></table>';
+      }
+    }
+    r+='</div>';
+    return r;
+  }
+
+  var win=window.open('','_blank');
+  if(!win){alert('Activez les popups pour imprimer.');return;}
+  win.document.open();
+  win.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8">');
+  win.document.write('<title>Timeline '+MN_FR[getM()]+' '+getY()+'</title>');
+  win.document.write('<style>'+printCSS+'</style>');
+  win.document.write('</head><body>');
+  var wi;
+  for(wi=0;wi<W.length;wi++){
+    win.document.write('<div class="wp">');
+    win.document.write('<div class="ph"><span>Centre de Sante de l\'Ambleve</span><span>Semaine '+(wi+1)+' - '+MN_FR[getM()]+' '+getY()+'</span></div>');
+    win.document.write('<div class="lg">');
+    win.document.write('<span class="lb" style="background:#B5D4F4;color:#0C447C">Presence</span>');
+    win.document.write('<span class="lb" style="background:#FFE066;color:#7D6000">Accueil devant</span>');
+    win.document.write('<span class="lb" style="background:#D2B4DE;color:#6C3483">Administratif</span>');
+    win.document.write('<span class="lb" style="background:#FAC775;color:#784212">Reunion</span>');
+    win.document.write('<span class="lb" style="background:#D4EED4;color:#1B5E20">Pause 12h-12h30</span>');
+    win.document.write('<span class="lb" style="background:#A9DFBF;color:#145A32">Pause 12h30-13h</span>');
+    win.document.write('</div>');
+    var wk=W[wi];
+    var j;
+    for(j=0;j<wk.length;j++){
+      win.document.write(pDayBlock(wk[j],wi));
+    }
+    win.document.write('</div>');
+  }
+  win.document.write('</body></html>');
+  win.document.close();
+  win.focus();
+  setTimeout(function(){if(win&&!win.closed)win.print();},800);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// FICHES RESUME IMPRESSION
+// ═══════════════════════════════════════════════════════════════
+function printFiches(){
+  var dd=getDays(getY(),getM()),F=getFeries(getY()),W=getWeeks(getY(),getM());
+  var rotRes=calcRotations(),ac=rotRes.cnt,workers=allWorkers();
+  var wd=dd.filter(function(d){return !isWE(d)&&!F[fd(d)];}).length;
+  var dwm={};W.forEach(function(wk,wi){wk.forEach(function(d){dwm[d.getDate()]=wi;});});
+  var win=window.open('','_blank');
+  if(!win){alert('Activez les popups pour imprimer.');return;}
+  win.document.open();
+  win.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Fiches Resume</title>');
+  win.document.write('<style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Arial,sans-serif;background:#fff;color:#000;}@page{size:A4;margin:15mm;}');
+  win.document.write('.f{page-break-after:always;padding:8mm;}h2{font-size:18px;margin-bottom:4px;}.s{font-size:12px;color:#666;margin-bottom:12px;}');
+  win.document.write('table{width:100%;border-collapse:collapse;font-size:13px;}td{padding:6px 8px;border-bottom:0.5px solid #eee;}td:first-child{color:#666;}');
+  win.document.write('.v{font-weight:bold;text-align:right;}.b{color:#185FA5;}.g{color:#0F6E56;}.r{color:#A32D2D;}.o{color:#9A6700;}</style>');
+  win.document.write('</head><body>');
+  workers.forEach(function(w){
+    var tH=0,tM=0,nc=0,nf=0,nw=0,pwH=W.map(function(){return 0;});
+    dd.forEach(function(d){
+      if(isWE(d))return;
+      var sl=(D[w.n]||{})[d.getDate()]||{},v=sl.h||'',r=parseH(v);
+      if(v==='conge')nc++;else if(v==='ferie')nf++;
+      else if(r){var dur=r.e-r.s,net=sl.midi?dur-0.5:dur;tH+=net;if(sl.midi)tM+=0.5;nw++;var wi=dwm[d.getDate()];if(wi!==undefined)pwH[wi]+=net;}
+    });
+    var obj=w.h*(dd.length/7),diff=tH-obj;
+    win.document.write('<div class="f"><h2>'+w.n+'</h2>');
+    win.document.write('<p class="s">'+w.h+'h/sem - '+w.r+' - '+MN_FR[getM()]+' '+getY()+'</p>');
+    win.document.write('<table>');
+    win.document.write('<tr><td>Heures travaillees</td><td class="v b">'+fH(tH)+'</td></tr>');
+    win.document.write('<tr><td>Objectif</td><td class="v">'+fH(obj)+'</td></tr>');
+    win.document.write('<tr><td>Ecart</td><td class="v '+(diff>=0?'g':'r')+'">'+(diff>=0?'+':'')+fH(Math.abs(diff))+'</td></tr>');
+    win.document.write('<tr><td>Pauses midi</td><td class="v">'+(tM>0?tM.toFixed(1)+'h':'-')+'</td></tr>');
+    win.document.write('<tr><td>Jours travailles</td><td class="v">'+nw+'/'+wd+'</td></tr>');
+    win.document.write('<tr><td>Conges</td><td class="v o">'+nc+'j</td></tr>');
+    win.document.write('<tr><td>Feries</td><td class="v g">'+nf+'j</td></tr>');
+    win.document.write('<tr><td>Tours accueil devant</td><td class="v">'+(ac[w.n]||0)+'</td></tr>');
+    W.forEach(function(wk,wi){win.document.write('<tr><td>Semaine '+(wi+1)+'</td><td class="v b">'+fH(pwH[wi])+'</td></tr>');});
+    win.document.write('</table></div>');
+  });
+  win.document.write('</body></html>');
+  win.document.close();
+  win.focus();
+  setTimeout(function(){if(win&&!win.closed)win.print();},500);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MEMBRES TEMPORAIRES
+// ═══════════════════════════════════════════════════════════════
+function renderTempSection(){
+  var temps=TEMPS.filter(function(t){return t.mois&&t.mois.indexOf(getM()+'_'+getY())>=0;});
+  var sec=document.getElementById('temp-section');
+  if(!sec)return;
+  if(!temps.length){sec.style.display='none';return;}
+  sec.style.display='block';
+  var cnt=document.getElementById('temp-count');
+  if(cnt)cnt.textContent='('+temps.length+' personne'+(temps.length>1?'s':'')+')';
+  var list=document.getElementById('temp-list');
+  if(list)list.innerHTML=temps.map(function(t){
+    return '<div class="tbadge"><div class="tav" style="background:'+t.c+'">'+t.av+'</div>'+
+      '<span>'+t.n+'</span><span style="font-size:10px;color:#888;margin-left:2px">- '+t.type+'</span>'+
+      '<span class="trm" onclick="removeTemp(\''+t.n+'\')">&#215;</span></div>';
+  }).join('');
+  var ptl=document.getElementById('temp-prest-label');
+  var ptb=document.getElementById('temp-prest-btns');
+  if(ptl)ptl.style.display=temps.length?'block':'none';
+  if(ptb)ptb.innerHTML=temps.map(function(t){
+    return '<button class="btn bp" onclick="genPrestation(\''+t.n+'\')">Fiche '+t.n+'</button>';
+  }).join('')+'<button class="btn bp" onclick="genPrestation(\'all-temp\')">Tous les temporaires</button>';
+}
+
+function opnAddTemp(){
+  var cont=document.getElementById('tmp-mois-checks');
+  if(!cont)return;
+  cont.innerHTML='';
+  var y=getY();
+  [y-1,y,y+1].forEach(function(yr){
+    MN_FR.forEach(function(m,mi){
+      var key=mi+'_'+yr;
+      var lbl=document.createElement('label');
+      lbl.className='mc-lbl';
+      var cb=document.createElement('input');
+      cb.type='checkbox';cb.value=key;
+      if(mi===getM()&&yr===getY())cb.checked=true;
+      lbl.appendChild(cb);
+      lbl.appendChild(document.createTextNode(m+' '+yr));
+      cont.appendChild(lbl);
+    });
+  });
+  var el=document.getElementById('tmp-prenom');if(el)el.value='';
+  var en=document.getElementById('tmp-nom');if(en)en.value='';
+  var eh=document.getElementById('tmp-heures');if(eh)eh.value='19';
+  var mdl=document.getElementById('mdl-temp');if(mdl)mdl.classList.add('on');
+  setTimeout(function(){var e=document.getElementById('tmp-prenom');if(e)e.focus();},50);
+}
+
+function closeTempMdl(){var el=document.getElementById('mdl-temp');if(el)el.classList.remove('on');}
+
+function saveTemp(){
+  var prenom=(document.getElementById('tmp-prenom')||{}).value||'';
+  var nom=(document.getElementById('tmp-nom')||{}).value||'';
+  var type=(document.getElementById('tmp-type')||{}).value||'Remplacant(e)';
+  var heures=parseFloat((document.getElementById('tmp-heures')||{}).value)||19;
+  prenom=prenom.trim();nom=nom.trim();
+  if(!prenom||!nom){alert('Veuillez saisir le prenom et le nom.');return;}
+  var fullName=prenom+' '+nom;
+  if(allWorkers().find(function(w){return w.n===fullName;})){alert('Ce membre est deja dans la liste.');return;}
+  var mois=Array.from(document.querySelectorAll('#tmp-mois-checks input:checked')).map(function(cb){return cb.value;});
+  if(!mois.length){alert('Veuillez selectionner au moins un mois.');return;}
+  var colorIdx=TEMPS.length%TEMP_COLORS.length;
+  var av=(prenom[0]+(nom[0]||'')).toUpperCase();
+  TEMPS.push({n:fullName,prenom:prenom,nom:nom,h:heures,r:type+' '+heures+'h/sem',av:av,c:TEMP_COLORS[colorIdx],contrat:type,type:type,mois:mois,temp:true});
+  closeTempMdl();save();initGrid();
+}
+
+function removeTemp(name){
+  if(!confirm('Retirer '+name+' ?'))return;
+  TEMPS=TEMPS.filter(function(t){return t.n!==name;});
+  delete D[name];save();initGrid();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// EXCEL
+// ═══════════════════════════════════════════════════════════════
+function doExcel(){
+  var dd=getDays(getY(),getM()),workers=allWorkers();
+  var hdr=['Accueillante','Contrat'];
+  dd.forEach(function(d){hdr.push(DS[d.getDay()]+' '+d.getDate());});
+  hdr.push('H trav.','Objectif');
+  var rows=[hdr];
+  workers.forEach(function(w){
+    var wh=0;
+    var row=[w.n,w.contrat||''];
+    dd.forEach(function(d){
+      var sl=(D[w.n]||{})[d.getDate()]||{},v=sl.h||'',r=parseH(v);
+      if(r){var net=sl.midi?r.e-r.s-0.5:r.e-r.s;wh+=net;}
+      row.push(v&&v!=='repos'&&v!=='conge'&&v!=='ferie'&&sl.midi?v+' ('+( sl.midi==='A'?'12h-12h30':'12h30-13h')+')':v);
+    });
+    row.push(fH(wh));row.push(fH(w.h*(dd.length/7)));
+    rows.push(row);
+  });
+  var ws=XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols']=[{wch:16},{wch:12}];
+  dd.forEach(function(){ws['!cols'].push({wch:11});});
+  ws['!cols'].push({wch:9},{wch:8});
+  var wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Aywaille');
+  XLSX.writeFile(wb,'Horaires_'+MN[getM()]+'_'+getY()+'.xlsx');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MODAL HORAIRE
+// ═══════════════════════════════════════════════════════════════
+function selMidi(v){
+  mdlMidi=v;
+  ['none','a','b'].forEach(function(x){
+    var el=document.getElementById('opt-'+x);if(el)el.classList.remove('sel');
+  });
+  var id='opt-'+(v===null?'none':v.toLowerCase());
+  var el=document.getElementById(id);if(el)el.classList.add('sel');
+}
+
+function opnMdl(td){
+  mdlTgt=td;
+  var n=td.dataset.n,d=parseInt(td.dataset.d),sl=(D[n]||{})[d]||{};
+  var mi=document.getElementById('mi');if(mi)mi.value=sl.h&&sl.h!=='repos'&&sl.h!=='conge'&&sl.h!=='ferie'?sl.h:'';
+  mdlMidi=sl.midi||null;selMidi(mdlMidi);
+  var mt=document.getElementById('mt');if(mt)mt.textContent=n+' - '+DF[new Date(getY(),getM(),d).getDay()]+' '+d;
+  var mdl=document.getElementById('mdl');if(mdl)mdl.classList.add('on');
+  setTimeout(function(){var e=document.getElementById('mi');if(e)e.focus();},50);
+}
+function closeMdl(){var el=document.getElementById('mdl');if(el)el.classList.remove('on');mdlTgt=null;mdlMidi=null;}
+function saveMdl(){
+  if(!mdlTgt)return;
+  var v=(document.getElementById('mi')||{}).value||'';v=v.trim();
+  var n=mdlTgt.dataset.n,d=parseInt(mdlTgt.dataset.d);
+  if(!D[n])D[n]={};
+  if(!v){delete D[n][d];}
+  else{var fx=(D[n][d]||{}).fx===true;D[n][d]={h:v,midi:v==='repos'||v==='conge'||v==='ferie'?null:mdlMidi,fx:fx};}
+  closeMdl();buildGrid();save();
+  if(ctab==='timeline')renderTL();
+  if(ctab==='rotations')renderRot();
+  if(ctab==='fiches')renderFiches();
+  if(ctab==='heures')buildHeuresGrid();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTEXT MENU
+// ═══════════════════════════════════════════════════════════════
+function opnCtx(e,td){
+  ctxTgt=td;
+  var n=td.dataset.n,d=parseInt(td.dataset.d),sl=(D[n]||{})[d]||{};
+  var midi=sl.midi||null;
+  ['ctx-mn','ctx-ma','ctx-mb'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove('aci');});
+  var id=midi===null?'ctx-mn':midi==='A'?'ctx-ma':'ctx-mb';
+  var el=document.getElementById(id);if(el)el.classList.add('aci');
+  var ctx=document.getElementById('ctx');
+  if(ctx){ctx.style.left=e.clientX+'px';ctx.style.top=e.clientY+'px';ctx.classList.add('on');}
+}
+function ctxMidi(v){
+  if(!ctxTgt)return;
+  var n=ctxTgt.dataset.n,d=parseInt(ctxTgt.dataset.d);
+  if(!D[n])D[n]={};
+  var sl=D[n][d]||{};
+  if(!sl.h||sl.h==='repos'||sl.h==='conge'||sl.h==='ferie'){var c=document.getElementById('ctx');if(c)c.classList.remove('on');return;}
+  D[n][d]=Object.assign({},sl,{midi:v});
+  var c=document.getElementById('ctx');if(c)c.classList.remove('on');
+  ctxTgt=null;buildGrid();save();
+  if(ctab==='timeline')renderTL();
+}
+function ctxSet(v){
+  if(ctxTgt){
+    var n=ctxTgt.dataset.n,d=parseInt(ctxTgt.dataset.d);
+    if(!D[n])D[n]={};
+    if(!v)delete D[n][d];else D[n][d]={h:v,midi:null};
+    buildGrid();save();
+    if(ctab==='timeline')renderTL();
+    if(ctab==='rotations')renderRot();
+    if(ctab==='fiches')renderFiches();
+    ctxTgt=null;
+  }
+  var c=document.getElementById('ctx');if(c)c.classList.remove('on');
+}
+
+function ctxCopyWeek(){
+  if(!ctxTgt){var c=document.getElementById('ctx');if(c)c.classList.remove('on');return;}
+  var n=ctxTgt.dataset.n,d=parseInt(ctxTgt.dataset.d);
+  var c=document.getElementById('ctx');if(c)c.classList.remove('on');
+  var W=getWeeks(getY(),getM());
+  var srcWi=-1;
+  W.forEach(function(wk,wi){wk.forEach(function(day){if(day.getDate()===d)srcWi=wi;});});
+  if(srcWi<0)return;
+  var info=document.getElementById('copy-info');
+  if(info)info.textContent='Travailleur : '+n+' | Semaine source : Sem. '+(srcWi+1);
+  var btns=document.getElementById('copy-week-btns');
+  if(btns){
+    btns.innerHTML='';
+    W.forEach(function(wk,wi){
+      if(wi===srcWi)return;
+      var btn=document.createElement('button');
+      btn.className='btn bb';
+      btn.textContent='Sem. '+(wi+1)+' ('+DF[wk[0].getDay()]+' '+pad(wk[0].getDate())+')';
+      btn.onclick=(function(srcW,dstW,wkr){
+        return function(){
+          var W2=getWeeks(getY(),getM());
+          var srcDays=W2[srcW],dstDays=W2[dstW];
+          var hasData=false;
+          dstDays.forEach(function(day){if((D[wkr]||{})[day.getDate()])hasData=true;});
+          if(hasData&&!confirm('La semaine '+(dstW+1)+' a deja des donnees pour '+wkr+'. Ecraser ?'))return;
+          if(!D[wkr])D[wkr]={};
+          srcDays.forEach(function(srcDay,i){
+            var dstDay=dstDays[i];
+            if(!dstDay)return;
+            var srcSlot=(D[wkr]||{})[srcDay.getDate()];
+            if(srcSlot){D[wkr][dstDay.getDate()]=Object.assign({},srcSlot,{fx:false});}
+            else{delete D[wkr][dstDay.getDate()];}
+          });
+          save();buildGrid();
+          if(ctab==='timeline')renderTL();
+          closeCopyMdl();
+          alert('Horaires de Sem.'+(srcW+1)+' copies vers Sem.'+(dstW+1)+' pour '+wkr+'.');
+        };
+      })(srcWi,wi,n);
+      btns.appendChild(btn);
+    });
+    if(!btns.children.length)btns.innerHTML='<span style="color:#888;font-size:12px">Aucune autre semaine disponible ce mois-ci.</span>';
+  }
+  var mdl=document.getElementById('mdl-copy');if(mdl)mdl.classList.add('on');
+}
+
+function closeCopyMdl(){var el=document.getElementById('mdl-copy');if(el)el.classList.remove('on');}
+
+// ═══════════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════════
+function sw(tab,btn){
+  ctab=tab;
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  if(btn)btn.classList.add('active');
+  else{var b=document.querySelector('.tab[data-t="'+tab+'"]');if(b)b.classList.add('active');}
+  ['horaire','timeline','rotations','fiches','prestation','heures'].forEach(function(t){
+    var el=document.getElementById('p-'+t);if(el)el.style.display=t===tab?'block':'none';
+  });
+  if(tab==='timeline')renderTL();
+  if(tab==='rotations')renderRot();
+  if(tab==='fiches')renderFiches();
+  if(tab==='heures')buildHeuresGrid();
+}
+function selW(i,btn){
+  twi=i;
+  document.querySelectorAll('.wbtn').forEach(function(b){b.classList.remove('active');});
+  if(btn)btn.classList.add('active');
+  renderTL();
+}
+function doReset(){
+  if(!confirm('Reinitialiser les horaires du mois ?'))return;
+  D={};applyFixed();buildGrid();save();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// INITIALISATION
+// ═══════════════════════════════════════════════════════════════
+function initSelects(){
+  var sm=document.getElementById('sm'),sy=document.getElementById('sy');
+  if(!sm||!sy)return;
+  var now=new Date();
+  MN_FR.forEach(function(m,i){var o=document.createElement('option');o.value=i;o.text=m;if(i===now.getMonth())o.selected=true;sm.appendChild(o);});
+  for(var y=2024;y<=2027;y++){var o=document.createElement('option');o.value=y;o.text=y;if(y===now.getFullYear())o.selected=true;sy.appendChild(o);}
+}
+
+function initGrid(){
+  D={};
+  var loaded=load();
+  if(!loaded)applyFixed();
+  else applyFixed();
+  buildGrid();
+}
+
+function importConges(input){
+  var file=input.files[0];
+  if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      var data=JSON.parse(e.target.result);
+      if(!Array.isArray(data)||!data.length){alert('Fichier invalide ou vide.');return;}
+      var imported=0,skipped=0,unknown=0;
+      var workers=allWorkers();
+      data.forEach(function(entry){
+        if(!entry.nom||!entry.dateDebut||!entry.dateFin){skipped++;return;}
+        // Vérifier que la personne existe
+        var found=workers.find(function(w){return w.n===entry.nom;});
+        if(!found){unknown++;return;}
+        // Parcourir toutes les dates entre dateDebut et dateFin
+        var start=new Date(entry.dateDebut);
+        var end=new Date(entry.dateFin);
+        var cur=new Date(start);
+        while(cur<=end){
+          // Ignorer WE
+          if(cur.getDay()!==0&&cur.getDay()!==6){
+            // Vérifier que c'est dans le mois affiché
+            if(cur.getMonth()===getM()&&cur.getFullYear()===getY()){
+              if(!D[entry.nom])D[entry.nom]={};
+              var existing=D[entry.nom][cur.getDate()];
+              // Ne pas écraser une absence déjà saisie manuellement (malade etc.)
+              if(!existing||existing.fx===true||existing.h==='conge'){
+                D[entry.nom][cur.getDate()]={h:'conge',midi:null,fx:false};
+                imported++;
+              }else{
+                skipped++;
+              }
+            }
+          }
+          cur.setDate(cur.getDate()+1);
+        }
+      });
+      input.value='';
+      buildGrid();save();
+      if(ctab==='timeline')renderTL();
+      var msg='Import termine :\n- '+imported+' jour(s) de conge inscrit(s)';
+      if(skipped>0)msg+='\n- '+skipped+' jour(s) ignore(s) (WE, autre mois, ou deja saisi)';
+      if(unknown>0)msg+='\n- '+unknown+' entree(s) avec nom inconnu';
+      alert(msg);
+    }catch(err){
+      alert('Erreur de lecture du fichier : '+err.message);
+      input.value='';
+    }
+  };
+  reader.readAsText(file);
+}
+
+function onCellClick(e,td){
+  if(e.ctrlKey||e.metaKey){
+    e.preventDefault();
+    if(copyMode){
+      pasteFrom(td);
+    } else {
+      var idx=selCells.findIndex(function(c){return c===td;});
+      if(idx>=0){
+        td.classList.remove('sel');
+        selCells.splice(idx,1);
+      } else {
+        td.classList.add('sel');
+        selCells.push(td);
+      }
+      updateCopyBar();
+    }
+  } else {
+    if(copyMode){clearSel();return;}
+    opnMdl(td);
+  }
+}
+
+function updateCopyBar(){
+  var bar=document.getElementById('copy-bar');
+  var txt=document.getElementById('copy-bar-txt');
+  var btn=document.getElementById('copy-bar-btn');
+  if(!bar||!txt||!btn)return;
+  if(copyMode){
+    bar.classList.add('on');
+    txt.textContent='Mode collage — Ctrl+clic sur la 1\u00e8re case de destination';
+    btn.style.display='none';
+  } else if(selCells.length>0){
+    bar.classList.add('on');
+    txt.textContent=selCells.length+' case'+(selCells.length>1?'s':'')+' s\u00e9lectionn\u00e9e'+(selCells.length>1?'s':'');
+    btn.textContent='Copier';
+    btn.style.display='';
+  } else {
+    bar.classList.remove('on');
+  }
+}
+
+function copyBarAction(){
+  if(!selCells.length)return;
+  copyBuffer=selCells.map(function(td){
+    var n=td.dataset.n,d=parseInt(td.dataset.d);
+    var sl=(D[n]||{})[d]||{};
+    return {h:sl.h||'',midi:sl.midi||null};
+  });
+  selCells.forEach(function(td){td.classList.remove('sel');});
+  selCells=[];
+  copyMode=true;
+  updateCopyBar();
+}
+
+function pasteFrom(startTd){
+  if(!copyBuffer.length)return;
+  var n=startTd.dataset.n,d=parseInt(startTd.dataset.d);
+  var allTds=Array.from(document.querySelectorAll('td.sl[data-n="'+n+'"]'));
+  allTds.sort(function(a,b){return parseInt(a.dataset.d)-parseInt(b.dataset.d);});
+  var startIdx=allTds.findIndex(function(td){return parseInt(td.dataset.d)===d;});
+  if(startIdx<0){clearSel();return;}
+  if(!D[n])D[n]={};
+  var pasted=0;
+  copyBuffer.forEach(function(slot,i){
+    var targetTd=allTds[startIdx+i];
+    if(!targetTd)return;
+    var d2=parseInt(targetTd.dataset.d);
+    if(slot.h){D[n][d2]={h:slot.h,midi:slot.midi,fx:false};}
+    else{delete D[n][d2];}
+    pasted++;
+  });
+  save();buildGrid();
+  if(ctab==='timeline')renderTL();
+  clearSel();
+  alert(pasted+' horaire'+(pasted>1?'s':'')+' coll'+(pasted>1?'s':'')+'.');
+}
+
+function clearSel(){
+  selCells.forEach(function(td){td.classList.remove('sel');});
+  selCells=[];
+  copyBuffer=[];
+  copyMode=false;
+  updateCopyBar();
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+// TABLEAU DES HEURES
+// ═══════════════════════════════════════════════════════════════
+
+// Heures normales par jour pour chaque personne à horaire fixe
+// dow: 1=Lun,2=Mar,3=Mer,4=Jeu,5=Ven
+var HOURS_PER_DAY = {
+  'Mélissa':    {1:9.65, 2:7.25, 3:6.50, 4:7.0,  5:7.60},
+  'Jean-Michel':{1:0,    2:7.0,  3:3.0,  4:6.0,  5:3.0},
+  'Doris':      {1:5.5,  2:9.5,  3:0,    4:5.5,  5:9.5},
+  'Audrey':     {1:8.0,  2:7.5,  3:7.5,  4:7.42, 5:0}
+};
+
+// Objectif hebdo pour personnes variables (pour alerte)
+var WEEKLY_TARGET = {
+  'Jennifer Riga': 30,
+  'Florence Ahn':  30.4,
+  'Jessica Charlier': 19,
+  'Valentine Wilket': 19
+};
+
+// Stockage des heures de congé manuelles: CHM[nom][date] = heures
+var CHM = {};
+
+function saveChm(){
+  try{
+    var all=JSON.parse(localStorage.getItem(SK)||'{}');
+    all['__chm__']=CHM;
+    localStorage.setItem(SK,JSON.stringify(all));
+  }catch(e){}
+}
+function loadChm(){
+  try{
+    var all=JSON.parse(localStorage.getItem(SK)||'{}');
+    if(all['__chm__'])CHM=all['__chm__'];
+  }catch(e){}
+}
+
+// Heures normales d'un travailleur un jour donné
+function normalHours(w, d){
+  var dw = d.getDay()===0?7:d.getDay();
+  // Horaire fixe codé
+  var nm = w.n.normalize ? w.n : w.n;
+  // Chercher dans HOURS_PER_DAY par nom (correspondance partielle pour accents)
+  var key = null;
+  Object.keys(HOURS_PER_DAY).forEach(function(k){
+    if(w.n.indexOf(k)>=0||k.indexOf(w.n.split(' ')[0])>=0) key=k;
+  });
+  if(key) return HOURS_PER_DAY[key][dw]||0;
+  // Sinon calculer depuis FX si disponible
+  var fx = FX[w.n];
+  if(fx && fx[dw] && fx[dw].h){
+    var r = parseH(fx[dw].h);
+    if(r){
+      var dur = r.e - r.s;
+      var midi = fx[dw].midi ? 0.5 : 0;
+      return Math.round((dur-midi)*100)/100;
+    }
+  }
+  return 0;
+}
+
+// Heures travaillées un jour pour un worker (net midi déduit)
+function dayHours(w, d){
+  var sl = (D[w.n]||{})[d.getDate()]||{};
+  var v = sl.h||'';
+  if(!v) return null; // pas d'horaire saisi
+  if(v==='repos') return {type:'repos', h:0};
+  if(v==='ferie'){
+    var nh = normalHours(w,d);
+    return {type:'ferie', h:nh};
+  }
+  if(v==='conge'){
+    // Chercher si heures manuellement saisies
+    var manKey = w.n+'|'+d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+    if(CHM[manKey]!==undefined) return {type:'conge', h:CHM[manKey], manual:true};
+    // Sinon heures normales pour horaire fixe
+    var nh2 = normalHours(w,d);
+    return {type:'conge', h:nh2, manual:false};
+  }
+  if(v==='malade') return {type:'malade', h:0};
+  if(v==='malade-sc') return {type:'malade-sc', h:0};
+  if(v==='css') return {type:'css', h:0};
+  var r = parseH(v);
+  if(r){
+    var dur = r.e - r.s;
+    var midi = sl.midi ? 0.5 : 0;
+    return {type:'normal', h:Math.round((dur-midi)*100)/100};
+  }
+  return null;
+}
+
+function fmtHours(h){
+  if(h===0) return '0';
+  var hh = Math.floor(h);
+  var dec = Math.round((h-hh)*100);
+  if(dec===0) return hh+'h';
+  return hh+','+( dec<10?'0'+dec:dec);
+}
+
+function buildHeuresGrid(){
+  loadChm();
+  var dd = getDays(getY(),getM()), F = getFeries(getY()), W = getWeeks(getY(),getM());
+  var workers = allWorkers();
+  var dwm = {};
+  W.forEach(function(wk,wi){wk.forEach(function(d){dwm[d.getDate()]=wi;});});
+
+  var tbl = document.getElementById('ht');
+  if(!tbl) return;
+  tbl.innerHTML = '';
+
+  // En-tête
+  var prevWH2=getPrevWeekHours(getY(),getM(),workers);
+  var th = '<tr><th style="min-width:100px;text-align:left;padding-left:8px;position:sticky;left:0;z-index:3;background:#EBF3FB;">Accueillante</th>';
+  if(prevWH2){th+='<th style="background:#e8ecf0;color:#888;font-size:9px;max-width:55px;min-width:55px;">&lt; Sem.</th>';}
+  dd.forEach(function(d){
+    var we = isWE(d), fe = F[fd(d)];
+    var bg = we?'background:#eee;color:#aaa':fe?'background:#D5F5E3;color:#1E8449':'';
+    th += '<th style="'+bg+'">'+DS[d.getDay()]+'<br>'+d.getDate()+(fe?'<br><span style="font-size:7px">&#9733;</span>':'')+'</th>';
+  });
+  th += '<th>Mois</th></tr>';
+  var thead = document.createElement('thead');
+  thead.innerHTML = th;
+  tbl.appendChild(thead);
+
+  var tbody = document.createElement('tbody');
+  var lastWasTemp = false;
+
+  workers.forEach(function(w){
+    if(!D[w.n]) D[w.n]={};
+    var isTemp = w.temp===true;
+    if(isTemp&&!lastWasTemp){
+      var sep = document.createElement('tr');
+      sep.className = 'tmp-sep';
+      sep.innerHTML = '<td colspan="'+(dd.length+2)+'">&#128101; MEMBRES TEMPORAIRES</td>';
+      tbody.appendChild(sep);
+    }
+    lastWasTemp = isTemp;
+
+    var totalMois = 0;
+    var pwH = W.map(function(){return 0;});
+    var hasAlert = false;
+
+    var tr = document.createElement('tr');
+    if(isTemp) tr.className='tmp-row';
+
+    var html = '<td class="nc'+(isTemp?' tmp':'')+'" style="position:sticky;left:0;z-index:2;">'+w.n+'<br><span style="font-weight:400;font-size:9px;color:#888">'+w.h+'h</span></td>';
+    if(prevWH2){
+      var ph2=prevWH2[w.n]||0;
+      html+='<td style="background:#f0f0f0;text-align:center;font-size:10px;font-weight:600;color:#666;max-width:55px;">'+(ph2>0?fmtHours(ph2):'—')+'</td>';
+    }
+    dd.forEach(function(d){
+      var we = isWE(d), fe = F[fd(d)];
+      var dh = dayHours(w,d);
+      var wi2 = dwm[d.getDate()];
+
+      if(we){
+        html += '<td style="background:#f5f5f5;"></td>';
+        return;
+      }
+
+      if(!dh){
+        // Pas d'horaire saisi
+        html += '<td style="text-align:center;color:#ccc;font-size:10px;">—</td>';
+        return;
+      }
+
+      var cellBg='', cellColor='#333', cellTxt='', cellTitle='', editable=false;
+
+      if(dh.type==='repos'){
+        cellBg='#F2F3F4'; cellColor='#888'; cellTxt='R';
+      } else if(dh.type==='ferie'){
+        cellBg='#D5F5E3'; cellColor='#1E8449';
+        cellTxt = dh.h>0 ? fmtHours(dh.h) : 'F';
+        cellTitle = 'Jour ferie';
+        if(dh.h>0){ totalMois+=dh.h; if(wi2!==undefined)pwH[wi2]+=dh.h; }
+      } else if(dh.type==='conge'){
+        cellBg='#FEF9E7'; cellColor='#7D6608';
+        cellTxt = dh.h>0 ? fmtHours(dh.h) : 'C';
+        if(dh.manual) cellTxt += '*';
+        editable = true;
+        cellTitle = 'Clic pour modifier les heures de conge';
+        if(dh.h>0){ totalMois+=dh.h; if(wi2!==undefined)pwH[wi2]+=dh.h; }
+      } else if(dh.type==='malade'){
+        cellBg='#f0f0f0'; cellColor='#555'; cellTxt='M';
+      } else if(dh.type==='malade-sc'){
+        cellBg='#f0f0f0'; cellColor='#555'; cellTxt='M!';
+      } else if(dh.type==='css'){
+        cellBg='#f0f0f0'; cellColor='#8E44AD'; cellTxt='CSS';
+      } else {
+        // Normal
+        cellTxt = fmtHours(dh.h);
+        cellColor = '#0C447C';
+        if(fe) cellBg='#D5F5E3';
+        totalMois+=dh.h; if(wi2!==undefined)pwH[wi2]+=dh.h;
+      }
+
+      var style='text-align:center;font-size:10px;font-weight:600;padding:3px 2px;';
+      style += 'background:'+cellBg+';color:'+cellColor+';';
+      if(editable) style+='cursor:pointer;';
+      var onclick = editable ? 'onclick="editCongeH(this,\''+w.n+'\',\''+fd(d)+'\')"' : '';
+      var title = cellTitle ? 'title="'+cellTitle+'"' : '';
+      html += '<td style="'+style+'" '+onclick+' '+title+'>'+cellTxt+'</td>';
+    });
+
+    // Total mois
+    html += '<td style="text-align:center;font-weight:700;color:#185FA5;font-size:11px;background:#f0f5ff;">'+fmtHours(totalMois)+'</td>';
+    tr.innerHTML = html;
+    tbody.appendChild(tr);
+
+    // Ligne sous-totaux semaine avec alertes
+    var trw = document.createElement('tr');
+    trw.className = 'wt'+(isTemp?' tmp-row':'');
+    var target = WEEKLY_TARGET[w.n];
+    var wh = '<td class="wl" style="position:sticky;left:0;z-index:2;background:#EBF3FB;">&#8627;/sem.</td>';
+    if(prevWH2){wh+='<td style="background:#e8e8e8;"></td>';}
+    var done = {};
+    dd.forEach(function(d){
+      if(isWE(d)){wh+='<td></td>';return;}
+      var wi2=dwm[d.getDate()];
+      if(wi2===undefined||done[wi2])return;
+      done[wi2]=true;
+      var span=W[wi2].length;
+      var semH=pwH[wi2];
+      var alert='';
+      var semH1=semH+(wi2===0&&prevWH2?(prevWH2[w.n]||0):0);
+      if(target && Math.abs(semH1-target)>0.1){
+        alert=' <span title="Objectif: '+target+'h / Sem.: '+fmtHours(semH1)+'" style="color:#E67E22;">&#9888;</span>';
+      }
+      wh+='<td colspan="'+span+'" style="text-align:center;color:#185FA5;background:#EBF3FB;">'+fmtHours(semH)+alert+'</td>';
+    });
+    wh+='<td></td>';
+    trw.innerHTML=wh;
+    tbody.appendChild(trw);
+  });
+
+  tbl.appendChild(tbody);
+}
+
+function editCongeH(td, nom, dateStr){
+  var manKey = nom+'|'+dateStr;
+  var cur = CHM[manKey]!==undefined ? CHM[manKey] : (normalHours({n:nom}, new Date(dateStr)) || '');
+  var val = prompt('Heures de conge pour '+nom+' le '+dateStr+'\n(laisser vide = heures normales, ex: 4.83 = 4h50)', cur);
+  if(val===null) return; // annulé
+  val = val.trim().replace(',','.');
+  if(val===''){
+    delete CHM[manKey];
+  } else {
+    var h = parseFloat(val);
+    if(isNaN(h)||h<0){alert('Valeur invalide.');return;}
+    CHM[manKey] = h;
+  }
+  saveChm();
+  buildHeuresGrid();
+}
+
+// Calcule les heures prestées dans la semaine ISO précédant le 1er du mois
+// Retourne un objet {nom: heures} ou null si le mois commence un lundi
+function getPrevWeekHours(y, m, workers) {
+  var firstDay = new Date(y, m, 1);
+  var dow = firstDay.getDay(); // 0=dim,1=lun,...,6=sam
+  // Si le mois commence un lundi (dow=1) ou dimanche/samedi, pas de jours précédents
+  if(dow===1||dow===0||dow===6) return null;
+  // Nombre de jours ouvrables précédents dans la même semaine ISO
+  // Lundi=1,Mardi=2,...,Vendredi=5 => jours précédents = dow-1 (max 4)
+  var nPrev = dow - 1; // ex: mercredi(3) -> 2 jours précédents (lun,mar)
+  if(nPrev<=0) return null;
+
+  // Ces jours sont dans le mois précédent
+  var prevM = m===0 ? 11 : m-1;
+  var prevY = m===0 ? y-1 : y;
+  var lastDayPrevM = new Date(prevY, prevM+1, 0).getDate();
+
+  // Charger les données du mois précédent depuis localStorage
+  var prevKey = prevY+'_'+prevM;
+  var prevD = {};
+  try{
+    var all=JSON.parse(localStorage.getItem('csa_v7')||'{}');
+    if(all[prevKey]) prevD=all[prevKey];
+  }catch(e){}
+
+  var result = {};
+  workers.forEach(function(w){
+    var total = 0;
+    for(var i=nPrev; i>=1; i--){
+      var dayNum = lastDayPrevM - (i-1);
+      var d = new Date(prevY, prevM, dayNum);
+      if(isWE(d)) continue;
+      var sl = (prevD[w.n]||{})[dayNum]||{};
+      var v = sl.h||'';
+      // Calculer heures ce jour
+      if(!v){
+        // Utiliser horaire fixe
+        var dw2 = d.getDay()===0?7:d.getDay();
+        var key2=null;
+        Object.keys(HOURS_PER_DAY).forEach(function(k){
+          if(w.n===k||w.n.indexOf(k)>=0) key2=k;
+        });
+        if(key2) total += HOURS_PER_DAY[key2][dw2]||0;
+        else {
+          var fx2=FX[w.n];
+          if(fx2&&fx2[dw2]&&fx2[dw2].h){
+            var r2=parseH(fx2[dw2].h);
+            if(r2) total+=Math.round((r2.e-r2.s-(fx2[dw2].midi?0.5:0))*100)/100;
+          }
+        }
+      } else if(v==='repos'||v==='conge'||v==='malade'||v==='malade-sc'||v==='css'||v==='ferie'){
+        // absences = 0h pour le total semaine
+      } else {
+        var r=parseH(v);
+        if(r) total+=Math.round((r.e-r.s-(sl.midi?0.5:0))*100)/100;
+      }
+    }
+    result[w.n] = Math.round(total*100)/100;
+  });
+  return result;
+}
+
+function bootstrap(){
+  try{var all=JSON.parse(localStorage.getItem(SK)||'{}');if(all['__temps__'])TEMPS=all['__temps__'];if(all['__chm__'])CHM=all['__chm__'];}catch(e){}
+  var sm=document.getElementById('sm'),sy=document.getElementById('sy');
+  if(sm)sm.addEventListener('change',function(){D={};load()||applyFixed()||true;buildGrid();});
+  if(sy)sy.addEventListener('change',function(){D={};load()||applyFixed()||true;buildGrid();});
+  var mdl=document.getElementById('mdl');
+  if(mdl)mdl.addEventListener('click',function(e){if(e.target===this)closeMdl();});
+  var mdlTemp=document.getElementById('mdl-temp');
+  if(mdlTemp)mdlTemp.addEventListener('click',function(e){if(e.target===this)closeTempMdl();});
+  var mdlCopy=document.getElementById('mdl-copy');
+  if(mdlCopy)mdlCopy.addEventListener('click',function(e){if(e.target===this)closeCopyMdl();});
+  var mi=document.getElementById('mi');
+  if(mi)mi.addEventListener('keydown',function(e){if(e.key==='Enter')saveMdl();if(e.key==='Escape')closeMdl();});
+  document.addEventListener('click',function(){var c=document.getElementById('ctx');if(c)c.classList.remove('on');});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')clearSel();});
+  initSelects();
+  initGrid();
+}
+
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',bootstrap);
+}else{
+  bootstrap();
+}
+
+</script>
+</body>
+</html>
