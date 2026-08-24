@@ -333,6 +333,27 @@ table.tlt td{border:0.5px solid #e8ecf0;padding:0;height:24px;}
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+var firebaseConfig = {
+  apiKey: "AIzaSyBizVB510pui2X-y5wb9NzXpB1mDbvBocw",
+  authDomain: "horaires-csa.firebaseapp.com",
+  databaseURL: "https://horaires-csa-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "horaires-csa",
+  storageBucket: "horaires-csa.firebasestorage.app",
+  messagingSenderId: "276539891001",
+  appId: "1:276539891001:web:b870e4338176e3101bdce8"
+};
+firebase.initializeApp(firebaseConfig);
+var db = firebase.database();
+var isFirebaseOk = false;
+db.ref('.info/connected').on('value', function(snap){
+  isFirebaseOk = snap.val() === true;
+  var el = document.getElementById('sv');
+  if(el && isFirebaseOk) el.title = 'Synchronise avec Firebase';
+});
+</script>
 <script>
 // ═══════════════════════════════════════════════════════════════
 // DONNÉES FIXES
@@ -379,18 +400,29 @@ function getY(){return parseInt(document.getElementById('sy').value);}
 function mKey(){return getY()+'_'+getM();}
 
 function save(){
+  // Sauvegarde locale (fallback)
   try{
     var all=JSON.parse(localStorage.getItem(SK)||'{}');
-    all[mKey()]=D; all['__temps__']=TEMPS;
+    all[mKey()]=D; all['__temps__']=TEMPS; all['__chm__']=CHM;
     localStorage.setItem(SK,JSON.stringify(all));
-    var el=document.getElementById('sv');
-    if(el){el.classList.add('on');setTimeout(function(){el.classList.remove('on');},2000);}
   }catch(e){}
+  // Sauvegarde Firebase
+  if(isFirebaseOk){
+    try{
+      db.ref('horaires/'+mKey()+'/D').set(D);
+      db.ref('horaires/temps').set(TEMPS);
+      db.ref('horaires/chm').set(CHM);
+    }catch(e){}
+  }
+  var el=document.getElementById('sv');
+  if(el){el.classList.add('on');setTimeout(function(){el.classList.remove('on');},2000);}
 }
 function load(){
+  // Charger depuis localStorage (synchrone, fallback)
   try{
     var all=JSON.parse(localStorage.getItem(SK)||'{}');
     if(all['__temps__'])TEMPS=all['__temps__'];
+    if(all['__chm__'])CHM=all['__chm__'];
     if(all[mKey()]){D=all[mKey()];return true;}
   }catch(e){}
   return false;
@@ -593,11 +625,21 @@ function buildGrid(){
       // Horaire prévu pour les absences
       var prevH='';
       if(isAbs){
-        var dw2=dow(new Date(getY(),getM(),d.getDate()));
-        var fxSlot=FX[w.n]&&FX[w.n][dw2]?FX[w.n][dw2]:null;
-        if(fxSlot&&fxSlot.h&&fxSlot.h!=='conge'&&fxSlot.h!==''){
-          var hColor=(v==='malade'||v==='malade-sc')?'#fff':'#888';
-          prevH='<span style="display:block;font-size:7px;color:'+hColor+';font-style:italic;margin-top:1px;">'+fxSlot.h+'</span>';
+        var hColor=(v==='malade'||v==='malade-sc')?'#fff':'#888';
+        var horairePrevu='';
+        // 1. D'abord chercher l'horaire memorise (variables comme Jennifer)
+        if(sl.prevH){
+          horairePrevu=sl.prevH;
+        } else {
+          // 2. Sinon horaire fixe (Melissa, Doris, Audrey, Jean-Michel)
+          var dw2=dow(new Date(getY(),getM(),d.getDate()));
+          var fxSlot=FX[w.n]&&FX[w.n][dw2]?FX[w.n][dw2]:null;
+          if(fxSlot&&fxSlot.h&&fxSlot.h!=='conge'&&fxSlot.h!==''){
+            horairePrevu=fxSlot.h;
+          }
+        }
+        if(horairePrevu){
+          prevH='<span style="display:block;font-size:7px;color:'+hColor+';font-style:italic;margin-top:1px;">'+horairePrevu+'</span>';
         }
       }
       var inn=isAbs?
@@ -1275,7 +1317,19 @@ function ctxSet(v){
   if(ctxTgt){
     var n=ctxTgt.dataset.n,d=parseInt(ctxTgt.dataset.d);
     if(!D[n])D[n]={};
-    if(!v)delete D[n][d];else D[n][d]={h:v,midi:null};
+    if(!v){delete D[n][d];}
+    else{
+      // Memoriser l'horaire precedent s'il y en avait un (pour les absences)
+      var prev=D[n][d]||{};
+      var prevH2=(prev.h&&prev.h!=='repos'&&prev.h!=='conge'&&prev.h!=='ferie'&&prev.h!=='malade'&&prev.h!=='malade-sc'&&prev.h!=='css')?prev.h:(prev.prevH||'');
+      var prevMidi=(prev.h&&parseH(prev.h))?prev.midi:(prev.prevMidi||null);
+      var isAbsence2=(v==='conge'||v==='malade'||v==='malade-sc'||v==='css'||v==='repos'||v==='ferie');
+      if(isAbsence2&&prevH2){
+        D[n][d]={h:v,midi:null,prevH:prevH2,prevMidi:prevMidi};
+      }else{
+        D[n][d]={h:v,midi:null};
+      }
+    }
     buildGrid();save();
     if(ctab==='timeline')renderTL();
     if(ctab==='rotations')renderRot();
@@ -1373,10 +1427,29 @@ function initSelects(){
 
 function initGrid(){
   D={};
-  var loaded=load();
-  if(!loaded)applyFixed();
-  else applyFixed();
+  // Charger depuis localStorage d'abord (affichage immédiat)
+  load();
+  applyFixed();
   buildGrid();
+  // Puis synchroniser avec Firebase si disponible
+  if(isFirebaseOk){
+    db.ref('horaires/'+mKey()+'/D').once('value', function(snap){
+      if(snap.val()){
+        D=snap.val();
+        applyFixed();
+        buildGrid();
+      }
+    });
+    db.ref('horaires/temps').once('value', function(snap){
+      if(snap.val()){
+        TEMPS=snap.val();
+        buildGrid();
+      }
+    });
+    db.ref('horaires/chm').once('value', function(snap){
+      if(snap.val()) CHM=snap.val();
+    });
+  }
 }
 
 function importConges(input){
@@ -1543,17 +1616,10 @@ var WEEKLY_TARGET = {
 var CHM = {};
 
 function saveChm(){
-  try{
-    var all=JSON.parse(localStorage.getItem(SK)||'{}');
-    all['__chm__']=CHM;
-    localStorage.setItem(SK,JSON.stringify(all));
-  }catch(e){}
+  save(); // save() gère déjà CHM maintenant
 }
 function loadChm(){
-  try{
-    var all=JSON.parse(localStorage.getItem(SK)||'{}');
-    if(all['__chm__'])CHM=all['__chm__'];
-  }catch(e){}
+  // CHM est maintenant chargé dans load() et depuis Firebase dans initGrid()
 }
 
 // Heures normales d'un travailleur un jour donné
@@ -1594,6 +1660,11 @@ function dayHours(w, d){
     // Chercher si heures manuellement saisies
     var manKey = w.n+'|'+d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
     if(CHM[manKey]!==undefined) return {type:'conge', h:CHM[manKey], manual:true};
+    // Si horaire memorise (variables), calculer ses heures
+    if(sl.prevH){
+      var rp=parseH(sl.prevH);
+      if(rp){var hp=Math.round((rp.e-rp.s-(sl.prevMidi?0.5:0))*100)/100;return {type:'conge', h:hp, manual:false};}
+    }
     // Sinon heures normales pour horaire fixe
     var nh2 = normalHours(w,d);
     return {type:'conge', h:nh2, manual:false};
@@ -1837,10 +1908,10 @@ function getPrevWeekHours(y, m, workers) {
 }
 
 function bootstrap(){
-  try{var all=JSON.parse(localStorage.getItem(SK)||'{}');if(all['__temps__'])TEMPS=all['__temps__'];if(all['__chm__'])CHM=all['__chm__'];}catch(e){}
+  // TEMPS et CHM sont charges dans load() et initGrid()
   var sm=document.getElementById('sm'),sy=document.getElementById('sy');
-  if(sm)sm.addEventListener('change',function(){D={};load()||applyFixed()||true;buildGrid();});
-  if(sy)sy.addEventListener('change',function(){D={};load()||applyFixed()||true;buildGrid();});
+  if(sm)sm.addEventListener('change',function(){D={};CHM={};initGrid();});
+  if(sy)sy.addEventListener('change',function(){D={};CHM={};initGrid();});
   var mdl=document.getElementById('mdl');
   if(mdl)mdl.addEventListener('click',function(e){if(e.target===this)closeMdl();});
   var mdlTemp=document.getElementById('mdl-temp');
@@ -1853,6 +1924,26 @@ function bootstrap(){
   document.addEventListener('keydown',function(e){if(e.key==='Escape')clearSel();});
   initSelects();
   initGrid();
+  // Ecouter les changements Firebase en temps reel
+  if(isFirebaseOk){
+    db.ref('horaires/'+mKey()+'/D').on('value', function(snap){
+      if(snap.val()){
+        var newD=snap.val();
+        // Mettre a jour seulement si different
+        if(JSON.stringify(newD)!==JSON.stringify(D)){
+          D=newD;
+          applyFixed();
+          buildGrid();
+        }
+      }
+    });
+    db.ref('horaires/temps').on('value', function(snap){
+      if(snap.val()&&JSON.stringify(snap.val())!==JSON.stringify(TEMPS)){
+        TEMPS=snap.val();
+        buildGrid();
+      }
+    });
+  }
 }
 
 if(document.readyState==='loading'){
