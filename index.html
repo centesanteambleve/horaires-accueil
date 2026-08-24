@@ -406,8 +406,8 @@ function save(){
     all[mKey()]=D; all['__temps__']=TEMPS; all['__chm__']=CHM;
     localStorage.setItem(SK,JSON.stringify(all));
   }catch(e){}
-  // Sauvegarde Firebase
-  if(isFirebaseOk){
+  // Sauvegarde Firebase (Firebase gere la file d'attente meme hors ligne)
+  if(typeof db!=='undefined'){
     try{
       db.ref('horaires/'+mKey()+'/D').set(D);
       db.ref('horaires/temps').set(TEMPS);
@@ -1427,27 +1427,28 @@ function initSelects(){
 
 function initGrid(){
   D={};
-  // Charger depuis localStorage d'abord (affichage immédiat)
+  // Charger depuis localStorage d'abord (affichage immédiat en attendant Firebase)
   load();
   applyFixed();
   buildGrid();
-  // Puis synchroniser avec Firebase si disponible
-  if(isFirebaseOk){
-    db.ref('horaires/'+mKey()+'/D').once('value', function(snap){
-      if(snap.val()){
-        D=snap.val();
-        applyFixed();
-        buildGrid();
-      }
+  // TOUJOURS lire depuis Firebase (meme si isFirebaseOk pas encore true)
+  // Firebase gere sa propre file d'attente et repond des que connecte
+  if(typeof db!=='undefined'){
+    db.ref('horaires/chm').once('value', function(snap){
+      if(snap.val()) CHM=snap.val();
     });
     db.ref('horaires/temps').once('value', function(snap){
       if(snap.val()){
         TEMPS=snap.val();
-        buildGrid();
       }
     });
-    db.ref('horaires/chm').once('value', function(snap){
-      if(snap.val()) CHM=snap.val();
+    db.ref('horaires/'+mKey()+'/D').once('value', function(snap){
+      if(snap.val()){
+        D=snap.val();
+      }
+      applyFixed();
+      buildGrid();
+      if(ctab==='heures')buildHeuresGrid();
     });
   }
 }
@@ -1907,11 +1908,45 @@ function getPrevWeekHours(y, m, workers) {
   return result;
 }
 
+var _rtRefD=null, _rtRefT=null, _rtRefC=null;
+function attachRealtime(){
+  if(typeof db==='undefined')return;
+  detachRealtime();
+  _rtRefD=db.ref('horaires/'+mKey()+'/D');
+  _rtRefD.on('value', function(snap){
+    var newD=snap.val()||{};
+    if(JSON.stringify(newD)!==JSON.stringify(D)){
+      D=newD;
+      applyFixed();
+      buildGrid();
+      if(ctab==='heures')buildHeuresGrid();
+    }
+  });
+  _rtRefT=db.ref('horaires/temps');
+  _rtRefT.on('value', function(snap){
+    var newT=snap.val()||[];
+    if(JSON.stringify(newT)!==JSON.stringify(TEMPS)){
+      TEMPS=newT;
+      buildGrid();
+    }
+  });
+  _rtRefC=db.ref('horaires/chm');
+  _rtRefC.on('value', function(snap){
+    if(snap.val())CHM=snap.val();
+  });
+}
+function detachRealtime(){
+  if(_rtRefD)_rtRefD.off();
+  if(_rtRefT)_rtRefT.off();
+  if(_rtRefC)_rtRefC.off();
+  _rtRefD=_rtRefT=_rtRefC=null;
+}
+
 function bootstrap(){
   // TEMPS et CHM sont charges dans load() et initGrid()
   var sm=document.getElementById('sm'),sy=document.getElementById('sy');
-  if(sm)sm.addEventListener('change',function(){D={};CHM={};initGrid();});
-  if(sy)sy.addEventListener('change',function(){D={};CHM={};initGrid();});
+  if(sm)sm.addEventListener('change',function(){detachRealtime();D={};initGrid();attachRealtime();});
+  if(sy)sy.addEventListener('change',function(){detachRealtime();D={};initGrid();attachRealtime();});
   var mdl=document.getElementById('mdl');
   if(mdl)mdl.addEventListener('click',function(e){if(e.target===this)closeMdl();});
   var mdlTemp=document.getElementById('mdl-temp');
@@ -1924,26 +1959,7 @@ function bootstrap(){
   document.addEventListener('keydown',function(e){if(e.key==='Escape')clearSel();});
   initSelects();
   initGrid();
-  // Ecouter les changements Firebase en temps reel
-  if(isFirebaseOk){
-    db.ref('horaires/'+mKey()+'/D').on('value', function(snap){
-      if(snap.val()){
-        var newD=snap.val();
-        // Mettre a jour seulement si different
-        if(JSON.stringify(newD)!==JSON.stringify(D)){
-          D=newD;
-          applyFixed();
-          buildGrid();
-        }
-      }
-    });
-    db.ref('horaires/temps').on('value', function(snap){
-      if(snap.val()&&JSON.stringify(snap.val())!==JSON.stringify(TEMPS)){
-        TEMPS=snap.val();
-        buildGrid();
-      }
-    });
-  }
+  attachRealtime();
 }
 
 if(document.readyState==='loading'){
