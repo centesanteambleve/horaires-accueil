@@ -8,7 +8,7 @@
 
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:Arial,sans-serif;background:#f0f4f8;color:#222;font-size:13px;}
-.app{max-width:1400px;margin:0 auto;padding:1rem;}
+.app{max-width:100%;margin:0 auto;padding:1rem;}
 .hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px;background:#fff;border-radius:10px;padding:12px 16px;box-shadow:0 1px 4px rgba(0,0,0,.08);}
 .ttl{font-size:17px;font-weight:700;color:#1B4F8A;}
 .sttl{font-size:11px;color:#888;margin-top:2px;}
@@ -34,13 +34,13 @@ table.hht{border-collapse:collapse;font-size:11px;min-width:100%;}
 table.hht th,table.hht td{border:1px solid #e8ecf0;padding:3px 4px;white-space:nowrap;}
 table.hht th{background:#EBF3FB;font-weight:600;color:#1B4F8A;text-align:center;font-size:10px;}
 table.hht th:first-child{position:sticky;left:0;z-index:3;background:#EBF3FB;}
-table.ht{border-collapse:collapse;font-size:11px;min-width:100%;}
-table.ht th,table.ht td{border:1px solid #e8ecf0;padding:3px 4px;white-space:nowrap;}
-table.ht th{background:#EBF3FB;font-weight:600;color:#1B4F8A;text-align:center;font-size:10px;}table.ht th:first-child{position:sticky;left:0;z-index:3;background:#EBF3FB;}
-td.nc{font-weight:600;color:#1B4F8A;background:#f0f5ff;padding:3px 8px;min-width:100px;border-right:2px solid #B5D4F4;position:sticky;left:0;z-index:2;}
+table.ht{border-collapse:collapse;font-size:12px;width:100%;min-width:100%;}
+table.ht th,table.ht td{border:1px solid #e8ecf0;padding:5px 6px;white-space:nowrap;}
+table.ht th{background:#EBF3FB;font-weight:600;color:#1B4F8A;text-align:center;font-size:11px;}table.ht th:first-child{position:sticky;left:0;z-index:3;background:#EBF3FB;}
+td.nc{font-weight:600;color:#1B4F8A;background:#f0f5ff;padding:5px 10px;min-width:110px;border-right:2px solid #B5D4F4;position:sticky;left:0;z-index:2;}
 td.nc.tmp{color:#7D3C98;background:#F5EEF8;border-right:2px solid #D2B4DE;position:sticky;left:0;z-index:2;}
 td.tc{font-weight:600;text-align:center;background:#f0f5ff;font-size:10px;min-width:40px;}
-td.sl{text-align:center;cursor:pointer;min-width:54px;font-size:9px;user-select:none;}
+td.sl{text-align:center;cursor:pointer;min-width:62px;font-size:10px;user-select:none;}
 td.sl:hover:not(.we):not(.fe):not(.rp):not(.cg){filter:brightness(.93);}
 td.sl.hv{background:#D6EAF8;color:#0C447C;}
 td.sl.hma{background:#D4EED4;color:#1B5E20;}
@@ -63,8 +63,8 @@ td.sl.css2{background:#8E44AD;color:#fff;cursor:default;}
 td.sl.fx{border-left:3px solid #185FA5;}
 td.sl.fxa{border-left:3px solid #1E8449;}
 td.sl.fxb{border-left:3px solid #145A32;}
-td.sl .hl{display:block;font-size:10px;font-weight:500;}
-td.sl .ml{display:block;font-size:8px;color:#1E8449;font-style:italic;}
+td.sl .hl{display:block;font-size:11px;font-weight:500;}
+td.sl .ml{display:block;font-size:9px;color:#1E8449;font-style:italic;}
 tr.wt td{background:#EBF3FB!important;font-size:9px;font-weight:600;text-align:center;color:#185FA5;border-top:2px solid #B5D4F4!important;}
 tr.wt td.wl{text-align:left;padding-left:6px;color:#888;position:sticky;left:0;z-index:2;background:#EBF3FB;}
 tr.tmp-sep td{background:#F5EEF8!important;color:#7D3C98;font-size:10px;font-weight:700;padding:4px 10px;border-top:2px solid #D2B4DE!important;}
@@ -1300,7 +1300,22 @@ function opnCtx(e,td){
   var id=midi===null?'ctx-mn':midi==='A'?'ctx-ma':'ctx-mb';
   var el=document.getElementById(id);if(el)el.classList.add('aci');
   var ctx=document.getElementById('ctx');
-  if(ctx){ctx.style.left=e.clientX+'px';ctx.style.top=e.clientY+'px';ctx.classList.add('on');}
+  if(ctx){
+    ctx.classList.add('on');
+    // Afficher d'abord pour mesurer la taille reelle
+    ctx.style.left='0px';ctx.style.top='0px';
+    var cw=ctx.offsetWidth||190, ch=ctx.offsetHeight||300;
+    var vw=window.innerWidth, vh=window.innerHeight;
+    var x=e.clientX, y=e.clientY;
+    // Ajuster horizontalement
+    if(x+cw>vw-10) x=vw-cw-10;
+    if(x<10) x=10;
+    // Ajuster verticalement
+    if(y+ch>vh-10) y=vh-ch-10;
+    if(y<10) y=10;
+    ctx.style.left=x+'px';
+    ctx.style.top=y+'px';
+  }
 }
 function ctxMidi(v){
   if(!ctxTgt)return;
