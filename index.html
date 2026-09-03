@@ -444,14 +444,24 @@ function fd(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate(
 function pad(n){return String(n).padStart(2,'0');}
 function getWeeks(y,m){
   var days=getDays(y,m).filter(function(d){return !isWE(d);}),w=[],c=[];
+  var lastWeek=null;
   days.forEach(function(d){
-    if(c.length&&d.getDay()<=c[c.length-1].getDay()){w.push(c);c=[];}
+    var isoW=getISOWeek(d);
+    if(lastWeek!==null&&isoW!==lastWeek){w.push(c);c=[];}
     c.push(d);
+    lastWeek=isoW;
   });
   if(c.length)w.push(c);
   return w;
 }
-function fH(h){
+function getISOWeek(d){
+  var date=new Date(d.getTime());
+  date.setHours(0,0,0,0);
+  // Jeudi de la semaine courante determine l'annee ISO
+  date.setDate(date.getDate()+3-((date.getDay()+6)%7));
+  var week1=new Date(date.getFullYear(),0,4);
+  return 1+Math.round(((date.getTime()-week1.getTime())/86400000-3+((week1.getDay()+6)%7))/7);
+}function fH(h){
   if(!h||h===0)return '-';
   var r=Math.floor(h),m=Math.round((h-r)*60);
   return m>0?r+'h'+pad(m):r+'h';
