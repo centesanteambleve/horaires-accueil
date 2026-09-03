@@ -408,11 +408,16 @@ function save(){
   }catch(e){}
   // Sauvegarde Firebase (Firebase gere la file d'attente meme hors ligne)
   if(typeof db!=='undefined'){
+    _lastLocalSave=Date.now();
+    _localWriteInProgress=true;
     try{
-      db.ref('horaires/'+mKey()+'/D').set(D);
+      var dCopy=JSON.parse(JSON.stringify(D));
+      db.ref('horaires/'+mKey()+'/D').set(dCopy,function(){
+        _localWriteInProgress=false;
+      });
       db.ref('horaires/temps').set(TEMPS);
       db.ref('horaires/chm').set(CHM);
-    }catch(e){}
+    }catch(e){_localWriteInProgress=false;}
   }
   var el=document.getElementById('sv');
   if(el){el.classList.add('on');setTimeout(function(){el.classList.remove('on');},2000);}
@@ -540,7 +545,11 @@ function applyFixed(){
       if(isWE(d))return;
       var ds=fd(d);
       var existing=D[w.n][d.getDate()];
+      // Une absence saisie manuellement (fx:false) n'est JAMAIS ecrasee
+      var isManualAbsence=existing&&existing.fx===false;
+      // Une case modifiee manuellement (fx explicitement false) est protegee
       var canOverwrite=!existing||existing.fx===true;
+      if(isManualAbsence)return; // proteger les congés/malades/etc saisis
       if(F[ds]){
         if(canOverwrite)D[w.n][d.getDate()]={h:'ferie',midi:null,fx:true,fn:F[ds]};
         return;
@@ -1340,9 +1349,9 @@ function ctxSet(v){
       var prevMidi=(prev.h&&parseH(prev.h))?prev.midi:(prev.prevMidi||null);
       var isAbsence2=(v==='conge'||v==='malade'||v==='malade-sc'||v==='css'||v==='repos'||v==='ferie');
       if(isAbsence2&&prevH2){
-        D[n][d]={h:v,midi:null,prevH:prevH2,prevMidi:prevMidi};
+        D[n][d]={h:v,midi:null,fx:false,prevH:prevH2,prevMidi:prevMidi};
       }else{
-        D[n][d]={h:v,midi:null};
+        D[n][d]={h:v,midi:null,fx:false};
       }
     }
     buildGrid();save();
@@ -1446,26 +1455,9 @@ function initGrid(){
   load();
   applyFixed();
   buildGrid();
-  // TOUJOURS lire depuis Firebase (meme si isFirebaseOk pas encore true)
-  // Firebase gere sa propre file d'attente et repond des que connecte
-  if(typeof db!=='undefined'){
-    db.ref('horaires/chm').once('value', function(snap){
-      if(snap.val()) CHM=snap.val();
-    });
-    db.ref('horaires/temps').once('value', function(snap){
-      if(snap.val()){
-        TEMPS=snap.val();
-      }
-    });
-    db.ref('horaires/'+mKey()+'/D').once('value', function(snap){
-      if(snap.val()){
-        D=snap.val();
-      }
-      applyFixed();
-      buildGrid();
-      if(ctab==='heures')buildHeuresGrid();
-    });
-  }
+  // Le chargement Firebase se fait via attachRealtime() (listener on())
+  // qui est appele apres initGrid dans bootstrap et au changement de mois.
+  // Pas de once() ici pour eviter les race conditions.
 }
 
 function importConges(input){
@@ -1924,12 +1916,29 @@ function getPrevWeekHours(y, m, workers) {
 }
 
 var _rtRefD=null, _rtRefT=null, _rtRefC=null;
+var _lastLocalSave=0, _localWriteInProgress=false;
 function attachRealtime(){
   if(typeof db==='undefined')return;
   detachRealtime();
   _rtRefD=db.ref('horaires/'+mKey()+'/D');
   _rtRefD.on('value', function(snap){
     var newD=snap.val()||{};
+    // Normaliser: une absence a toujours fx:false (Firebase peut retirer les null)
+    Object.keys(newD).forEach(function(nm){
+      if(!newD[nm])return;
+      Object.keys(newD[nm]).forEach(function(dy){
+        var slot=newD[nm][dy];
+        if(slot&&slot.h&&['repos','conge','malade','malade-sc','css'].indexOf(slot.h)>=0){
+          if(slot.fx!==false)slot.fx=false;
+        }
+      });
+    });
+    // Si on vient d'ecrire localement (< 3s), ignorer ce retour pour ne pas
+    // ecraser notre propre modification avec une version en transit
+    if(_localWriteInProgress||(Date.now()-_lastLocalSave)<3000){
+      // Fusionner: garder notre D local mais accepter les nouveautes des AUTRES
+      return;
+    }
     if(JSON.stringify(newD)!==JSON.stringify(D)){
       D=newD;
       applyFixed();
