@@ -263,7 +263,7 @@ table.tlt td{border:0.5px solid #e8ecf0;padding:0;height:24px;}
   <div class="csep"></div>
   <div class="ci" onclick="ctxSet('repos')">Repos</div>
   <div class="ci" onclick="ctxSet('conge')">Cong&#233;</div>
-  <div class="ci" onclick="ctxSet('ferie')">F&#233;ri&#233;</div>
+
   <div class="ci" onclick="ctxSet('malade')">&#128137; Malade</div>
   <div class="ci" onclick="ctxSet('malade-sc')">&#128137; Malade s/c</div>
   <div class="ci" onclick="ctxSet('css')">Cong&#233; sans solde</div>
@@ -1341,13 +1341,17 @@ function ctxSet(v){
   if(ctxTgt){
     var n=ctxTgt.dataset.n,d=parseInt(ctxTgt.dataset.d);
     if(!D[n])D[n]={};
-    if(!v){delete D[n][d];}
+    if(!v){
+      delete D[n][d];
+      // Réappliquer l'horaire fixe si la personne en a un ce jour
+      applyFixed();
+    }
     else{
       // Memoriser l'horaire precedent s'il y en avait un (pour les absences)
       var prev=D[n][d]||{};
       var prevH2=(prev.h&&prev.h!=='repos'&&prev.h!=='conge'&&prev.h!=='ferie'&&prev.h!=='malade'&&prev.h!=='malade-sc'&&prev.h!=='css')?prev.h:(prev.prevH||'');
       var prevMidi=(prev.h&&parseH(prev.h))?prev.midi:(prev.prevMidi||null);
-      var isAbsence2=(v==='conge'||v==='malade'||v==='malade-sc'||v==='css'||v==='repos'||v==='ferie');
+      var isAbsence2=(v==='conge'||v==='malade'||v==='malade-sc'||v==='css'||v==='repos');
       if(isAbsence2&&prevH2){
         D[n][d]={h:v,midi:null,fx:false,prevH:prevH2,prevMidi:prevMidi};
       }else{
@@ -1931,6 +1935,8 @@ function attachRealtime(){
         if(slot&&slot.h&&['repos','conge','malade','malade-sc','css'].indexOf(slot.h)>=0){
           if(slot.fx!==false)slot.fx=false;
         }
+        // Ancien ferie stocke en fx:false -> le convertir en fx:true (auto)
+        if(slot&&slot.h==='ferie'&&slot.fx===false){slot.fx=true;}
       });
     });
     // Si on vient d'ecrire localement (< 3s), ignorer ce retour pour ne pas
