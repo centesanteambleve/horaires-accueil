@@ -587,6 +587,21 @@ function buildGrid(){
   var dd=getDays(getY(),getM()),F=getFeries(getY()),W=getWeeks(getY(),getM());
   var dwm={};
   W.forEach(function(wk,wi){wk.forEach(function(d){dwm[d.getDate()]=wi;});});
+  // Mapping incluant les WE pour le colspan des sous-totaux
+  var dwmFull={};
+  dd.forEach(function(d){
+    var isoW=getISOWeek(d);
+    // Trouver quelle semaine W correspond a cette semaine ISO
+    for(var wi=0;wi<W.length;wi++){
+      if(W[wi].length&&getISOWeek(W[wi][0])===isoW){dwmFull[d.getDate()]=wi;break;}
+    }
+  });
+  // Compter le nombre de colonnes (jours affichés) par semaine
+  var weekColCount={};
+  dd.forEach(function(d){
+    var wi=dwmFull[d.getDate()];
+    if(wi!==undefined)weekColCount[wi]=(weekColCount[wi]||0)+1;
+  });
   var workers=allWorkers();
   var tbl=document.getElementById('gt');
   if(!tbl)return;
@@ -688,11 +703,11 @@ function buildGrid(){
     if(prevWH){wh+='<td style="background:#e8e8e8;"></td>';}
     var done={};
     dd.forEach(function(d){
-      if(isWE(d)){wh+='<td></td>';return;}
-      var wi2=dwm[d.getDate()];
-      if(wi2===undefined||done[wi2])return;
+      var wi2=dwmFull[d.getDate()];
+      if(wi2===undefined){wh+='<td></td>';return;}
+      if(done[wi2])return;
       done[wi2]=true;
-      var span=W[wi2].length;
+      var span=weekColCount[wi2]||W[wi2].length;
       var semTot=pwH[wi2]+(wi2===0&&prevWH?(prevWH[w.n]||0):0);
       var semDisp=fH(pwH[wi2])+(wi2===0&&prevWH&&(prevWH[w.n]||0)>0?' (+'+fH(prevWH[w.n]||0)+')':'')+(pwM[wi2]>0?' ('+pwM[wi2].toFixed(1)+'h)':'');
       wh+='<td colspan="'+span+'" style="text-align:center;color:'+tc+';background:'+(isTemp?'#F5EEF8':'#EBF3FB')+'">'+semDisp+'</td>';
@@ -1833,7 +1848,7 @@ function buildHeuresGrid(){
       var wi2=dwm[d.getDate()];
       if(wi2===undefined||done[wi2])return;
       done[wi2]=true;
-      var span=W[wi2].length;
+      var span=weekColCount[wi2]||W[wi2].length;
       var semH=pwH[wi2];
       var alert='';
       var semH1=semH+(wi2===0&&prevWH2?(prevWH2[w.n]||0):0);
