@@ -2,6 +2,9 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Horaires Accueil &#8212; CSA</title>
 <style>
@@ -159,7 +162,7 @@ table.tlt td{border:0.5px solid #e8ecf0;border-top:0.5px solid #000;border-botto
 <div class="hdr">
   <div>
     <div class="ttl">&#128065; Consultation Horaires &#8212; Centre de Sant&#233; de l'Ambl&#232;ve</div>
-    <div class="sttl">Lecture seule &#183; Mise &#224; jour automatique</div>
+    <div class="sttl">Lecture seule &#183; Mise &#224; jour automatique &#183; <strong>Version 12/11/2026</strong></div>
   </div>
   <div class="ctrls">
     <select id="sm"></select>
@@ -367,9 +370,10 @@ var PERM=[
   {n:'Doris',h:30,r:'4/5',av:'DO',c:'#D5F5E3',contrat:'CDI',temp:false},
   {n:'Audrey',h:30.4,r:'4/5',av:'AU',c:'#FDEDEC',contrat:'CDI',temp:false},
   {n:'Jean-Michel',h:19,r:'mi-temps',av:'JM',c:'#FEF9E7',contrat:'CDI',temp:false},
+  {n:'Valentine Wilket',h:38,r:'38h/semaine',av:'VW',c:'#D1F2EB',contrat:'CDI',temp:false},
   {n:'Florence Ahn',h:30,r:'30h/semaine',av:'FL',c:'#FDF2E9',contrat:'CDI',temp:false}
 ];
-var VAR_PERM=['Jennifer Riga','Florence Ahn'];
+var VAR_PERM=['Jennifer Riga','Florence Ahn','Valentine Wilket'];
 var SK='csa_v7';
 var ctab='horaire', twi=0, ctxTgt=null, mdlTgt=null, mdlMidi=null;
 var selCells=[], copyBuffer=[], copyMode=false;
@@ -1632,7 +1636,7 @@ var WEEKLY_TARGET = {
   'Jennifer Riga': 30,
   'Florence Ahn':  30.4,
   'Jessica Charlier': 19,
-  'Valentine Wilket': 19
+  'Valentine Wilket': 38
 };
 
 // Stockage des heures de congé manuelles: CHM[nom][date] = heures
